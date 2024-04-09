@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;800&display=swap');
+@import 'node_modules/react-modal-video/scss/modal-video.scss';
+/*CSS Table Of Content Starts Here*/
+/*
+01. General CSS
+---------------------------
+Section css
+---------------------------
+*/
+/*CSS Table Of Content Ends Here*/
+
+//--Abstracts--//
+@import "_abstracts/_mixins";
+@import "_abstracts/_variables";
+//--Abstracts--//
+
+//--Base--//
+@import "_base/_typography";
+//--Base--//
+
+//--Layout--//
+@import "_layout/_header";
+@import "_layout/_banner";
+@import "_layout/_section";
+@import "_layout/_animation";
+//--Layout--//
+
+//--Components--//
+@import "_components/_buttons";
+//--Components--//
+
+//--Base--//
+@import "_base/_responsive";
+//--Base--//

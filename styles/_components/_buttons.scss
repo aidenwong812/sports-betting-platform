@@ -1,0 +1,114 @@
+/*--Button Area Start--*/
+/*--Button Area Start--*/
+.cmn--btn {
+	border-radius: 5px;
+	padding: 8px 22px 13px;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	display: inline-block;
+	color:var(--btn-clr);
+	border: unset;
+	text-transform: capitalize;
+	position: relative;
+	span{
+		position: relative;
+		z-index: 1;
+		transition: all 0.5s;
+	}
+	&::before, &::after {
+		inset: 0;
+		content: '';
+		transition: all ease 0.5s;
+		position: absolute;
+		border-radius: 5px;
+	}
+	&::after {
+		@include gradian-bg;
+		opacity: 0;
+	}
+	&::before {
+		@include gradian-hover;
+	}
+	&:hover {
+		color: var(--white-clr);
+		&::before {
+			opacity: 0;
+		}
+		&::after {
+			opacity: 1;
+		}
+	}
+}
+.btn--two{
+	border-radius: 5px;
+	padding: 6px 22px 11px;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	display: inline-block;
+	color:var(--btn-clr);
+	background-color: var(--btn-two);
+	border: unset;
+	text-transform: capitalize;
+	transition: all 0.3s;
+	border: 1px solid var(--btn-two);
+	overflow: hidden;
+	&:hover{
+		background-color: transparent;
+		border-color: var(--btn-two);
+	}
+}
+.cmn--grp{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 30px;
+	.border-btn{
+		&::before{
+			background-color: #170E30;
+		}
+	}
+}
+.border-btn{
+	border-radius: 5px;
+	padding: 11px 22px 12px;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	transition: 0.3s;
+	display: inline-block;
+	color:var(--title);
+	text-transform: capitalize;
+	position: relative;
+	@include gradian-bg;
+	span{
+		position: relative;
+		z-index: 1;
+		font-weight: 600;
+		@include gradian-text;
+	}
+	&::before, &::after {
+		inset: 0;
+		content: '';
+		transition: all ease 0.5s;
+		position: absolute;
+	}
+	&::before {
+		background: var(--section-bg);
+		border-radius: 5px;
+		inset: 1px;
+		transition: all 0.5s;
+	}
+	&::after{
+		opacity: 1;
+	}
+	&:hover{
+		&::before{
+			opacity: 1;
+		}
+		@include gradian-hover;
+	}
+}
+/*--Button Area End--*/
+/*--Button Area End--*/
