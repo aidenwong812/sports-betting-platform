@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --max-warnings 0",
+    "lint:fix": "next lint --fix",
+    "prettier:fix": "npx prettier --write components pages shared lib styles providers hooks",
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.7",
