@@ -12,19 +12,6 @@ const BreadCrumb = ({ title }: BreadCrumbProps) => {
                     <h1>
                         {title}
                     </h1>
-                    <ul className="bread-tag">
-                        <li>
-                            <Link href="#0">
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <i className="fas fa-arrow-right"></i>
-                        </li>
-                        <li>
-                            {title}
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
