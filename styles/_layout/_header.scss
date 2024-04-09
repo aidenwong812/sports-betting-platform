@@ -2,6 +2,11 @@
 //--Preloader Here--//
 
 //--Preloader End--//
+
+.Toastify__toast-container {
+	z-index: 99999999999!important;
+}
+
 .left-site-menu{
     ::-webkit-scrollbar {
         width: 0px;
@@ -1785,7 +1790,7 @@
 
 //--Register Popup Here--//
 .mylogin{
-	z-index: 99999999999;
+	z-index: 999999999;
 	background-color: rgba(0,0,0,0.55);
 	.modal-content{
 		background-color: var(--login);

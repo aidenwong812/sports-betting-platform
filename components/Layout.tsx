@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useId, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
+import SignIn from './auth/SignIn';
+import SignUp from './auth/SignUp';
 
 interface Option {
   value: string;
@@ -31,11 +33,11 @@ export default function Layout({ children }: Props) {
   const [selectedOption, setSelectedOption] = useState<Option | null | unknown>(options[0]);
   const [selectedLangOption, setSelectedLangOption] = useState<Option | null | unknown>(langOptions[0]);
   const [selectedDacimalOption, setSelectedDacimalOption] = useState<Option | null | unknown>(decimalOptions[0]);
-  const [openMenu, setOpenMenu] = useState(false)
-  const [openMenu2, setOpenMenu2] = useState(false)
+  const [openSignIn, setOpenSignIn] = useState(false)
+  const [openSignUp, setOpenSignUp] = useState(false)
   const inactiveTheme = theme === "light" ? "dark" : "light";
-  const {pathname} = useRouter()
-  
+  const { pathname } = useRouter()
+
   const customStyles: StylesConfig = {
     control: (provided, state) => ({
       ...provided,
@@ -43,10 +45,10 @@ export default function Layout({ children }: Props) {
       borderColor: '#1F493F',
       border: state.isFocused ? '0' : '0',
     }),
-    option: (provided,state) => ({
+    option: (provided, state) => ({
       ...provided,
-      color: state.isSelected?'#ffffff':'#000',
-      backgroundColor: state.isSelected?'#1F493F':'#ffffff'
+      color: state.isSelected ? '#ffffff' : '#000',
+      backgroundColor: state.isSelected ? '#1F493F' : '#ffffff'
     }),
     singleValue: base => ({
       ...base,
@@ -75,12 +77,12 @@ export default function Layout({ children }: Props) {
                   <img src="/img/logo/dark-logo.png" alt="logo" />
                 </Link>
               </div>
-              <div className={`header-bar ${openMenu && 'active act'}`} onClick={() => setOpenMenu(!openMenu)}>
+              {/* <div className={`header-bar ${openSignIn && 'active act'}`} onClick={() => setOpenSignIn(!openSignIn)}>
                 <span></span>
                 <span></span>
                 <span></span>
-              </div>
-              <ul className={`main-menu ${openMenu && 'active act'}`}>
+              </div> */}
+              <ul className={`main-menu ${openSignIn && 'active act'}`}>
                 <li className="menu--btn">
                   <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <span>Log In</span>
@@ -535,133 +537,8 @@ export default function Layout({ children }: Props) {
         {/* // <!--Main Body Section End--> */}
 
         {/* // <!-- Popup Section Start --> */}
-        <div className="modal mylogin signup-popup fade" id="exampleModal" tabIndex={-1} aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <div className="head">
-                  <h5>
-                    Sign into your account
-                  </h5>
-                  <p>
-                    Don't have an account? <Link href="#0" className="text-base">Sign up</Link>
-                  </p>
-                </div>
-              </div>
-              <button type="button" className="btn-close cross-btn" data-bs-dismiss="modal" aria-label="Close"></button>
-              <div className="modal-body">
-                <div className="register-from">
-                  <form action="#0">
-                    <div className="items">
-                      <div className="form-input">
-                        <label htmlFor="email3" className="form-label">Email</label>
-                        <input type="email" id="email3" placeholder="Your Email" />
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="form-input">
-                        <label htmlFor="password-field" className="form-label">Password</label>
-                        <div className="form-group">
-                          <input id="password-field" type="password" className="form-control" placeholder="Your Password" name="password" />
-                          <span id="#password-field" className="fa fa-fw fa-eye field-icon toggle-password"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="remember d-flex align-items-center justify-content-between">
-                        <div className="form-check">
-                          <label className="form-check-label" htmlFor="flexCheckDefault22">
-                            <input className="form-check-input" type="checkbox" id="flexCheckDefault22" />
-                            Remember me
-                          </label>
-                        </div>
-                        <Link href="#0" className="forget">
-                          Forget password?
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="items text-center">
-                      <button type="submit" className="cmn--btn cd-popup-close repopup">
-                        <span>Start Playing</span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="modal mylogin fade" id="exampleModal2" tabIndex={-1} aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <div className="head">
-                  <h5>
-                    Create New Account
-                  </h5>
-                  <p>
-                    Already have an account? <Link href="#0" className="text-base">Login</Link>
-                  </p>
-                </div>
-              </div>
-              <button type="button" className="btn-close cross-btn" data-bs-dismiss="modal" aria-label="Close"></button>
-              <div className="modal-body">
-                <div className="register-from">
-                  <form action="#0">
-                    <div className="items">
-                      <div className="form-input">
-                        <label htmlFor="uname" className="form-label">Username</label>
-                        <input type="text" id="uname" placeholder="Your Username" />
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="form-input">
-                        <label htmlFor="email33" className="form-label">Email</label>
-                        <input type="email" id="email33" placeholder="Your Email" />
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="form-input">
-                        <label htmlFor="password-field" className="form-label">Password</label>
-                        <div className="form-group">
-                          <input id="password-field2" type="password" className="form-control" placeholder="Your Password" name="password" />
-                          <span id="#password-field2" className="fa fa-fw fa-eye field-icon toggle-password2"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="items">
-                      <div className="check-area">
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="ones1" />
-                          <label className="form-check-label" htmlFor="ones1">
-                            I certify that I am at least 18 years of age
-                          </label>
-                        </div>
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="ones2" />
-                          <label className="form-check-label" htmlFor="ones2">
-                            I agree to the <Link href="#0" className="text-base">Privacy Policy</Link>
-                          </label>
-                        </div>
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="ones3" />
-                          <label className="form-check-label" htmlFor="ones3">
-                            I want to receive <Link href="#0" className="text-base">news and offers</Link>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="items text-center">
-                      <button type="submit" className="cmn--btn cd-popup-close repopup">
-                        <span>Start Playing</span>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SignIn />
+        <SignUp />
         {/* // <!--menu modal--> */}
         <div className="modal right-menu-modal fade" id="exampleModal3" tabIndex={-1} aria-hidden="true">
           <div className="modal-dialog modal-sm">
