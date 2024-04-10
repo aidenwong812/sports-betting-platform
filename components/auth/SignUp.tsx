@@ -20,7 +20,7 @@ const SignUp = () => {
       router.push('/#')
     } else {
       if (res.data?.error) {
-        // toast.error(res.data.error)
+        toast.error(res.data.error)
       }
     }
   }
