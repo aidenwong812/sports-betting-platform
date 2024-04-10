@@ -7,6 +7,10 @@ import "@/styles/main.scss";
 import "react-toastify/dist/ReactToastify.css"
 import Layout from '@/components/Layout';
 
+import WalletAdapter from '@/components/WalletAdapter';
+
+
+
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -14,11 +18,13 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsLoading(false);
   }, []);
   return (
-    <ThemeProvider enableSystem={false}>
-      <Layout>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </Layout>
-    </ThemeProvider>
+    <WalletAdapter>
+      <ThemeProvider enableSystem={false}>
+        <Layout>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </Layout>
+      </ThemeProvider>
+    </WalletAdapter>
   )
 }

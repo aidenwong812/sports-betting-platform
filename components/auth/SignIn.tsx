@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
-const SignIn = () => {
+interface LoginProps {
+  setOpenWallet: React.Dispatch<React.SetStateAction<boolean>>
+};
+const SignIn: React.FC<LoginProps> = ({setOpenWallet}) => {
   const router = useRouter()
   const [isDialogOpen, setIsDialogOpen] = useState(true);
 
@@ -13,10 +16,13 @@ const SignIn = () => {
     const formData = new FormData(event.target as HTMLFormElement);
     const email = formData.get("email3") as string;
     const password = formData.get("password") as string;
-
+    
+    
+    setOpenWallet(true);
     // Perform your form submission logic here
     const res = await axios.post("/api/auth/signin", { email, password });
     if (res.status === 200 && res.data.res === "success") {
+      setOpenWallet(true);
       router.push('/#')
     } else {
       if (res.data?.error) {
