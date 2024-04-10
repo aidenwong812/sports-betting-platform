@@ -9,8 +9,6 @@ import Layout from '@/components/Layout';
 
 import WalletAdapter from '@/components/WalletAdapter';
 
-
-
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {

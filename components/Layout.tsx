@@ -4,14 +4,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useId, useState } from 'react';
+import { WalletMultiButton, WalletDisconnectButton } from '@solana/wallet-adapter-react-ui';
 import Select, { StylesConfig } from 'react-select';
 
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
-// import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton, WalletDisconnectButton } from '@solana/wallet-adapter-react-ui';
-
-
 
 interface Option {
   value: string;
