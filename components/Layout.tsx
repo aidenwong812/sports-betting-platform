@@ -74,7 +74,7 @@ export default function Layout({ children }: Props) {
                   <img src="/img/logo/logo.png" alt="logo" />
                 </Link>
                 <Link href="/" className="dark-logo">
-                  <img src="/img/logo/dark-logo.png" alt="logo" />
+                  <img src="/img/logo/logo.png" alt="logo" />
                 </Link>
               </div>
               {/* <div className={`header-bar ${openSignIn && 'active act'}`} onClick={() => setOpenSignIn(!openSignIn)}>
@@ -96,23 +96,6 @@ export default function Layout({ children }: Props) {
               </ul>
             </div>
             <div className="right-menu-reature">
-              <div className="language">
-                <div className='d-flex gap-2 align-items-center'>
-                  <div className="glo">
-                    <i className="fas fa-globe"></i>
-                  </div>
-                  <Select
-                    instanceId={useId()}
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    components={{
-                      IndicatorSeparator: () => null,
-                    }}
-                    styles={customStyles}
-                  />
-                </div>
-              </div>
               <div className="mode--toggle" onClick={() => setTheme(inactiveTheme)}>
                 <img src={`/img/${theme === 'dark' ? 'moon' : 'sun'}.png`} alt="" />
               </div>
@@ -149,7 +132,7 @@ export default function Layout({ children }: Props) {
               <div className="container">
                 <div className="footer-wrapper">
                   <p>
-                    Copyright {new Date().getFullYear().toString()} <Link href="#0" className="text-base">OnlineBets</Link> All Rights Reserved.
+                    Copyright {new Date().getFullYear().toString()} <Link href="#0" className="text-base">Sports Pepe</Link> All Rights Reserved.
                   </p>
                   <ul className="footer-link">
                     <li>
