@@ -3,7 +3,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useId, useState } from 'react';
+import { WalletMultiButton, WalletDisconnectButton } from '@solana/wallet-adapter-react-ui';
 import Select, { StylesConfig } from 'react-select';
+
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 
@@ -35,8 +37,12 @@ export default function Layout({ children }: Props) {
   const [selectedDacimalOption, setSelectedDacimalOption] = useState<Option | null | unknown>(decimalOptions[0]);
   const [openSignIn, setOpenSignIn] = useState(false)
   const [openSignUp, setOpenSignUp] = useState(false)
+
+  const [openWallet, setOpenWallet] = useState(false);
   const inactiveTheme = theme === "light" ? "dark" : "light";
   const { pathname } = useRouter()
+  
+  
 
   const customStyles: StylesConfig = {
     control: (provided, state) => ({
@@ -110,6 +116,14 @@ export default function Layout({ children }: Props) {
                     Sign Up
                   </span>
                 </Link>
+               
+                { openWallet && (
+                  <div id="mywallet">
+                    <WalletMultiButton></WalletMultiButton>
+                  </div>)
+                }
+
+                {/* <WalletDisconnectButton /> */}
               </div>
             </div>
           </div>
@@ -520,7 +534,7 @@ export default function Layout({ children }: Props) {
         {/* // <!--Main Body Section End--> */}
 
         {/* // <!-- Popup Section Start --> */}
-        <SignIn />
+        <SignIn setOpenWallet={setOpenWallet}/>
         <SignUp />
         {/* // <!--menu modal--> */}
         <div className="modal right-menu-modal fade" id="exampleModal3" tabIndex={-1} aria-hidden="true">
