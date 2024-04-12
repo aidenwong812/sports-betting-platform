@@ -7,7 +7,17 @@ import "@/styles/main.scss";
 import "react-toastify/dist/ReactToastify.css"
 import Layout from '@/components/Layout';
 
-import WalletAdapter from '@/components/WalletAdapter';
+import { WagmiProvider } from 'wagmi';
+import {
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
+
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { config } from '@/components/WalletConfig';
+
+
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,13 +26,17 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsLoading(false);
   }, []);
   return (
-    <WalletAdapter>
-      <ThemeProvider enableSystem={false}>
-        <Layout>
-          <Component {...pageProps} />
-          <ToastContainer />
-        </Layout>
-      </ThemeProvider>
-    </WalletAdapter>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
+          <ThemeProvider enableSystem={false}>
+            <Layout>
+              <Component {...pageProps} />
+              <ToastContainer />
+            </Layout>
+          </ThemeProvider>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }

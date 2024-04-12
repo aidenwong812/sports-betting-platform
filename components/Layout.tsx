@@ -3,11 +3,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useId, useState } from 'react';
-import { WalletMultiButton, WalletDisconnectButton } from '@solana/wallet-adapter-react-ui';
 import Select, { StylesConfig } from 'react-select';
 
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
+import { WalletConnectButton } from './ConnectButton';
 
 interface Option {
   value: string;
@@ -134,13 +134,8 @@ export default function Layout({ children }: Props) {
                   </span>
                 </Link>
                
-                { openWallet && (
-                  <div id="mywallet">
-                    <WalletMultiButton></WalletMultiButton>
-                  </div>)
-                }
+                { openWallet && <WalletConnectButton /> }
 
-                {/* <WalletDisconnectButton /> */}
               </div>
             </div>
           </div>
