@@ -42,28 +42,28 @@
 	height: 100%;
 }
 @mixin gradian-bg{
-	background: linear-gradient(80.92deg, #00A182 -7.62%, #81CD34 105.55%);
+	background: linear-gradient(80.92deg, #af03ff -7.62%, #460663 105.55%);
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 }
 @mixin gradian-border{
-	background: linear-gradient(80.92deg, #81CD34 -7.62%, #00A182 105.55%);
+	background: linear-gradient(80.92deg, #460663 -7.62%, #af03ff 105.55%);
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 }
 @mixin gradian-50{
-	background: linear-gradient(80.92deg, #00A182 -7.62%, #81CD34 105.55%);
+	background: linear-gradient(80.92deg, #af03ff -7.62%, #460663 105.55%);
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 	border-radius: 50%;
 }
 @mixin gradian-5{
-	background: linear-gradient(80.92deg, #00A182 -7.62%, #81CD34 105.55%);
+	background: linear-gradient(80.92deg, #460663 -7.62%, #af03ff 105.55%);
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
 }
 @mixin gradian-hover{
-	background: linear-gradient(80.92deg, #81CD34 -7.62%, #00A182 105.55%);
+	background: linear-gradient(80.92deg, #af03ff -7.62%, #460663 105.55%);
 }
 @mixin gradian-text{
-	background: linear-gradient(80.92deg, #81CD34 -7.62%, #00A182 105.55%);
+	background: linear-gradient(80.92deg, #af03ff -7.62%, #460663 105.55%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
