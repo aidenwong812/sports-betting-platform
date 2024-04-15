@@ -16,14 +16,15 @@ import {
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { config } from '@/components/WalletConfig';
 
-
 const queryClient = new QueryClient();
+
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
     setIsLoading(false);
+    
   }, []);
   return (
     <WagmiProvider config={config}>
