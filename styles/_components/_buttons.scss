@@ -21,6 +21,7 @@
 		content: '';
 		transition: all ease 0.5s;
 		position: absolute;
+		border: 1px solid #af03ff;
 		border-radius: 5px;
 	}
 	&::after {
@@ -32,11 +33,14 @@
 	}
 	&:hover {
 		color: var(--white-clr);
+		border-color: #af03ff;
 		&::before {
-			opacity: 0;
+			background: none;
+			border-color: #af03ff;
 		}
 		&::after {
-			opacity: 1;
+			background: none;
+			border-color: #af03ff;
 		}
 	}
 }
