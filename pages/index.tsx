@@ -5,7 +5,7 @@ import { Fixture } from "@/lib/types/fixture";
 import getFixtures from "@/lib/getFixtures";
 import DisplayFixtures from "@/components/DisplayFixtures";
 import { DayAfterTomorrow, Today, Tomorrow } from "@/lib/const/date";
-import Spinner from "@/components/spinner";
+import Spinner from "@/components/Spinner";
 
 const football = () => {
   const [fixtures1, setFixtures1] = useState<Fixture[]>([])
@@ -16,6 +16,7 @@ const football = () => {
   useEffect(() => {
     async function init() {
       setLoading(true)
+      
       const res = await Promise.all([
         await getFixtures(Today.toLocaleDateString('en-CA')),
         await getFixtures(Tomorrow.toLocaleDateString('en-CA')),
@@ -24,6 +25,7 @@ const football = () => {
       setFixtures1(res[0])
       setFixtures2(res[1])
       setFixtures3(res[2])
+      
       setLoading(false)
     }
 
