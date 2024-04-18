@@ -13,7 +13,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const RAINBOWKIT_API_KEY = process.env.RAINBOWKIT_API_KEY;
 
-console.log("RAINBOWKT_API_KEY => ", RAINBOWKIT_API_KEY);
 const connectors = connectorsForWallets([
     {
       groupName: 'Connect Wallet',

@@ -756,9 +756,9 @@
               }
               &:hover {
                 @include gradian-bg;
-                border-color: var(--match-two);
+                border-color: #460663;
                 .list {
-                  color: var(--white);
+                  color: #FFFBFB;
                 }
               }
             }

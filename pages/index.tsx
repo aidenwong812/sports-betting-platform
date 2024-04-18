@@ -1,6 +1,8 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import Sponsor from "@/components/Sponsor";
+import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 const footballMatchData = [
   {
     id: 1,
@@ -92,6 +94,22 @@ const footballMatchData = [
   },
 ];
 const football = () => {
+  const [figures, setFigures] = useState([])
+
+  useEffect(() => {
+    const date = new Date().toLocaleDateString('en-CA')
+    console.log(date)
+    const url = `https://api-football-v1.p.rapidapi.com/v3/fixtures?date=${date}`
+    axios.get(url, {
+      headers: {
+        "X-RapidAPI-Key": "4d0108a5a6mshc2e36a7acaf5ecap162acbjsn80103448a735",
+        "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+      }
+    }).then(res => {
+      console.log(res.data)
+    })
+  }, [])
+
   return (
     <>
       <BreadCrumb title="Football" />
