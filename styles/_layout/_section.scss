@@ -615,7 +615,8 @@
             span {
               @include fz16;
               &:not(:last-child) {
-                margin-right: 4px;
+                margin-left: 8px;
+                margin-right: 8px;
               }
               i {
                 color: var(--search-icon);
@@ -639,7 +640,7 @@
             li {
               @include fz16;
             }
-            width: 60%;
+            width: 55%;
             @include flex;
             justify-content: space-around;
           }
@@ -651,20 +652,20 @@
           padding: 20px 10px;
           border-radius: 0 0 10px 10px;
           .table-body-left {
-            width: calc(100% - 55%);
+            width: calc(100% - 50%);
             @include flex;
             justify-content: center;
             gap: 20px;
             li {
               @include flex;
-              gap: 10px;
-              a {
+              gap: 20px;
+              div {
                 display: flex;
                 align-items: center;
-                gap: 7px;
+                gap: 10px;
                 span {
                   font-weight: 400;
-                  font-size: 16px;
+                  font-size: 18px;
                   line-height: 14px;
                   i {
                     color: var(--search-icon);
@@ -731,7 +732,7 @@
             @include flex;
             justify-content: space-between;
             gap: 20px;
-            .table-pointing-box:not(:last-child) {
+            .table-pointing-box {
               text-align: center;
               margin: 0 auto;
               background-color: var(--left-menu);
@@ -740,6 +741,7 @@
               padding: 10px 10px;
               transition: all 0.3s;
               border: 1px solid var(--left-menu);
+              cursor: pointer;
               .list {
                 font-size: 18px;
                 line-height: 30px;
