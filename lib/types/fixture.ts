@@ -20,3 +20,8 @@ export type Fixture = {
     }
   }
 }
+
+export type Odds = {
+  value: string,
+  odd: string,
+}

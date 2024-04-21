@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import BreadCrumb from '@/components/BreadCrumb';
 import Sponsor from '@/components/Sponsor';
+import { useEffect, useState } from 'react';
+import getOdds from '@/lib/getOdds';
 
 const details = () => {
    return (
@@ -41,8 +43,8 @@ const details = () => {
                                        <path d="M15.4609 17.6919C14.3697 16.6711 12.6512 16.7239 11.6909 17.8687C3.97445 27.0681 -0.194085 38.7672 0.00693804 50.8329C0.207961 62.8986 4.7639 74.4523 12.7825 83.3896C13.7804 84.5018 15.4997 84.4973 16.5563 83.4407V83.4407C17.613 82.3842 17.606 80.6762 16.6154 79.5574C9.58572 71.6181 5.59499 61.4046 5.41735 50.7428C5.23972 40.081 8.888 29.7402 15.6493 21.5711C16.6021 20.42 16.5522 18.7127 15.4609 17.6919V17.6919Z" fill="url(#paint0_linear_965_3)" />
                                        <defs>
                                           <linearGradient id="paint0_linear_965_3" x1="-6.43565" y1="115" x2="121.545" y2="94.548" gradientUnits="userSpaceOnUse">
-                                             <stop offset="5%" stop-color="#81CD34" />
-                                             <stop offset="1" stop-color="#00A182" />
+                                             <stop offset="5%" stopColor="#81CD34" />
+                                             <stop offset="1" stopColor="#00A182" />
                                           </linearGradient>
                                        </defs>
                                     </svg>
@@ -2463,7 +2465,7 @@ const details = () => {
          {/* <!--Banner--> */}
 
          {/* <!--Sponsor Section--> */}
-        <Sponsor />
+         <Sponsor />
       </>
    );
 };
