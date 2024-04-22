@@ -250,6 +250,10 @@
     }
 }
 .breadcumd-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
     h1{
         margin-top: -3px;
     }
@@ -263,6 +267,34 @@
             i{
                 font-size: 16px;
             }
+        }
+    }
+    .search-bar {
+        width: 30%;
+        margin-top: -3px;
+        position: relative;
+        input {
+            width: 100%;
+            background-color: unset;
+            border: unset;
+            padding: 15px 10px 20px 35px;
+            background-color: var(--theme-bg);
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            line-height: 17.2px;
+            font-weight: 600;
+        }
+        .icon{
+            position: absolute;
+            top: 14px;
+            left: 12px;
+            i{
+                color: var(--search-icon);
+            }
+        }
+        ::placeholder{
+            color: var(--search-rgba);
         }
     }
 }

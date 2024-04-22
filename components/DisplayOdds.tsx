@@ -10,7 +10,6 @@ const DisplayOdds = ({ fixtureId }: { fixtureId: string }) => {
          getOdds(fixtureId).then(res => setOdds(res))
       }
    }, [])
-   console.log(odds)
 
   return (
     <div className="table-body-right">
