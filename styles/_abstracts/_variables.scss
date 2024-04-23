@@ -1,51 +1,51 @@
 :root {
-    --base: #12A777;
+    --base: #9b12a7;
     --title: #3D1879;
     --glo-icon: #E8E4F9;
-    --theme: #03d6f9;
-    --theme-bg: #460663;
-    --login: #1B3931;
-    --box-bg: #460663;
-    --varification: #283D39;
+    --theme: #dc03f9;
+    --theme-bg: #491f49;
+    --login: #391b38;
+    --box-bg: #281029;
+    --varification: #3c283d;
     --plc: #989898;
     --details-tab-color: #BBBBBB;
     --section-bg: #101046;
-    --varicode: #8E5858;
+    --varicode: #83588e;
     --point-last: #6D9289;
     --reword-border: #18725C;
     --progress-bar: #D9D9D9;
     --progress-border: #767676;
     --left-border: #23584C;
     --com-switch: #098F6B;
-    --left-menu: #8b0cc5;
+    --left-menu: #371c39;
     --hob: #71C73E;
-    --re-bg: #29534C;
-    --re-bg2: #2A645A;
-    --re-bg3: #376D64;
-    --slider-bg: #460663;
-    --vari-border: #2A433D;
-    --table-bg: #390352;
+    --re-bg: #532951;
+    --re-bg2: #622a64;
+    --re-bg3: #6b376d;
+    --slider-bg: #502b54;
+    --vari-border: #412a43;
+    --table-bg: #230e25;
     --match-two: #23C290;
     --point-color: #A7D1C7;
     --social-border: #CBCAF2;
     --terminal-bg: #1A2825;
     --icon-hover: #D4AC66;
-    --accordion-bg: #142925;
-    --details: #af03ff;
-    --details-tap-bg: #0F4538;
+    --accordion-bg: #291414;
+    --details: #3f193f;
+    --details-tap-bg: #430f45;
     --pro-before: #14A876;
     --picture-border: #3C4B4B;
-    --banner-freature: #1B3630;
+    --banner-freature: #331b36;
     --search-rgba: rgba(255, 255, 255, 0.4);
     --search-icon: #C6C6CB;
-    --body: #632580;
+    --body: #2f1730;
     --dots: #33645B;
     --dots-active: #6EC640;
     --match-border: #767676;
     --white: #FFFFFF;
     --black: #111;
     --btn-clr: #FFFBFB;
-    --btn-two: #eb551a;
+    --btn-two: #FF8A00;
     --Breadcumnd: #271A51;
     --footer: #240945;
     --pragraph: #999A9A;
@@ -53,10 +53,8 @@
     --next: #514477;
     --ratting: #FFAD02;
     --video-bg: #342B4E;
-    --switch: #E8E4F9;   
+    --switch: #E8E4F9;
 }
-
-//not allowed down code
 
 [data-theme='dark'] {
     --base: #12A777;
