@@ -40,7 +40,7 @@ export default function Layout({ children }: Props) {
 
   const [openWallet, setOpenWallet] = useState(false);
   const inactiveTheme = theme === "light" ? "dark" : "light";
-  const { pathname } = useRouter()  
+  const { pathname } = useRouter()
 
   const customStyles: StylesConfig = {
     control: (provided, state) => ({
@@ -100,9 +100,9 @@ export default function Layout({ children }: Props) {
               </ul>
             </div>
             <div className="right-menu-reature">
-              {/* <div className="mode--toggle" onClick={() => setTheme(inactiveTheme)}>
+              <div className="mode--toggle" onClick={() => setTheme(inactiveTheme)}>
                 <img src={`/img/${theme === 'dark' ? 'moon' : 'sun'}.png`} alt="" />
-              </div> */}
+              </div>
               <div className="signup-area">
                 <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   <span>
@@ -114,8 +114,8 @@ export default function Layout({ children }: Props) {
                     Sign Up
                   </span>
                 </Link>
-               
-                { openWallet && <WalletConnectButton /> }
+
+                {openWallet && <WalletConnectButton />}
 
               </div>
             </div>
@@ -127,6 +127,188 @@ export default function Layout({ children }: Props) {
         {/* <!--Main Body Section Here--> */}
         <div className="main-body">
           {/* <!--Left Box Menu--> */}
+          <div className="left-site-menu">
+            <div className="left-box">
+              <header className="header">
+                <nav className={`menu ${openSignIn && 'active act'}`}>
+                  <ul className="main-list-menu">
+                    <li>
+                      <ul className="menu-promot menu-promot-first">
+                        <li>
+                          <form>
+                            <input type="text" placeholder="Search........." />
+                            <span className="icon">
+                              <i className="fas fa-magnifying-glass"></i>
+                            </span>
+                          </form>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-home"></i>
+                            </div>
+                            <span>
+                              Home
+                            </span>
+                          </Link>
+                          <Link href="/" className={`main-list-menu-live ${pathname == '/live' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-live"></i>
+                            </div>
+                            <span>
+                              Live
+                            </span>
+                            <span className="live-watch">
+                              10
+                            </span>
+                          </Link>
+                          <Link href="/" className={`${pathname == '/favorites' && 'active'}`}>
+                            <div className="icon">
+                              <i className="fas fa-star"></i>
+                            </div>
+                            <span>
+                              Favorites
+                            </span>
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <ul className="menu-promot menu-promot-bottom">
+                        <li className="pro">
+                          Games
+                        </li>
+
+
+                        <li>
+                          <Link href="/" className={`${pathname == '/football' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-football"></i>
+                            </div>
+                            <span>
+                              Football
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/basketball' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-basketball"></i>
+                            </div>
+                            <span>
+                              Basketball
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/tennis' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-tennis"></i>
+                            </div>
+                            <span>
+                              Tennis
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/hockeyball' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-hockyball"></i>
+                            </div>
+                            <span>
+                              Ice Hockey
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/tabletennis' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-tabletennis"></i>
+                            </div>
+                            <span>
+                              Table Tennis
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/volleyball' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-volleyball"></i>
+                            </div>
+                            <span>
+                              Volleyball
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/basevall' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-baseball"></i>
+                            </div>
+                            <span>
+                              Baseball
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/rugby' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-rugby"></i>
+                            </div>
+                            <span>
+                              Rugby
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/mma' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-mma"></i>
+                            </div>
+                            <span>
+                              MMA
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/americanball' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-americanball"></i>
+                            </div>
+                            <span>
+                              American Football
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/boxing' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-boxing"></i>
+                            </div>
+                            <span>
+                              Boxing
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/" className={`${pathname == '/cricket' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-cricket"></i>
+                            </div>
+                            <span>
+                              Cricket
+                            </span>
+                          </Link>
+                        </li>
+
+
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+              </header>
+            </div>
+          </div>
           {/* <!--Left Box Menu--> */}
 
           {/* <!--Middle Body--> */}
@@ -527,7 +709,7 @@ export default function Layout({ children }: Props) {
         {/* // <!--Main Body Section End--> */}
 
         {/* // <!-- Popup Section Start --> */}
-        <SignIn setOpenWallet={setOpenWallet}/>
+        <SignIn setOpenWallet={setOpenWallet} />
         <SignUp />
         {/* // <!--menu modal--> */}
         <div className="modal right-menu-modal fade" id="exampleModal3" tabIndex={-1} aria-hidden="true">
