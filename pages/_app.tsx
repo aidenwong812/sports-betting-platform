@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
-          <ThemeProvider enableSystem={false} defaultTheme='dark'>
+          <ThemeProvider enableSystem={false}>
             <Layout>
               <Component {...pageProps} />
               <ToastContainer />

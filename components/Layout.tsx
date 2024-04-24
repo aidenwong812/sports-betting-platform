@@ -35,10 +35,10 @@ export default function Layout({ children }: Props) {
   const [selectedOption, setSelectedOption] = useState<Option | null | unknown>(options[0]);
   const [selectedLangOption, setSelectedLangOption] = useState<Option | null | unknown>(langOptions[0]);
   const [selectedDacimalOption, setSelectedDacimalOption] = useState<Option | null | unknown>(decimalOptions[0]);
-  const [openSignIn, setOpenSignIn] = useState(false)
-  const [openSignUp, setOpenSignUp] = useState(false)
-
+  const [openMenu, setOpenMenu] = useState(false)
+  const [openMenu2, setOpenMenu2] = useState(false)
   const [openWallet, setOpenWallet] = useState(false);
+
   const inactiveTheme = theme === "light" ? "dark" : "light";
   const { pathname } = useRouter()
 
@@ -81,12 +81,12 @@ export default function Layout({ children }: Props) {
                   <img src="/img/logo/logo.png" alt="logo" />
                 </Link>
               </div>
-              {/* <div className={`header-bar ${openSignIn && 'active act'}`} onClick={() => setOpenSignIn(!openSignIn)}>
+              <div className={`header-bar ${openMenu && 'active act'}`} onClick={() => setOpenMenu(!openMenu)}>
                 <span></span>
                 <span></span>
                 <span></span>
-              </div> */}
-              <ul className={`main-menu ${openSignIn && 'active act'}`}>
+              </div>
+              <ul className={`main-menu ${openMenu && 'active act'}`}>
                 <li className="menu--btn">
                   <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <span>Log In</span>
@@ -130,7 +130,7 @@ export default function Layout({ children }: Props) {
           <div className="left-site-menu">
             <div className="left-box">
               <header className="header">
-                <nav className={`menu ${openSignIn && 'active act'}`}>
+                <nav className={`menu ${openMenu2 && 'active act'}`}>
                   <ul className="main-list-menu">
                     <li>
                       <ul className="menu-promot menu-promot-first">
@@ -201,7 +201,17 @@ export default function Layout({ children }: Props) {
                           </Link>
                         </li>
                         <li>
-                          <Link href="/" className={`${pathname == '/tennis' && 'active'}`}>
+                          <Link href="ebasketball" className={`${pathname == '/ebasketball' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-basketball"></i>
+                            </div>
+                            <span>
+                              eBasketball
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="tennis" className={`${pathname == '/tennis' && 'active'}`}>
                             <div className="icon">
                               <i className="icon-tennis"></i>
                             </div>
@@ -211,7 +221,37 @@ export default function Layout({ children }: Props) {
                           </Link>
                         </li>
                         <li>
-                          <Link href="/" className={`${pathname == '/hockeyball' && 'active'}`}>
+                          <Link href="etennis" className={`${pathname == '/etennis' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-etennis"></i>
+                            </div>
+                            <span>
+                              eTennis
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="dota2" className={`${pathname == '/dota2' && 'active'}`}>
+                            <div className="icon">
+                              <i className="icon-dota"></i>
+                            </div>
+                            <span>
+                              Dota 2
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="lol" className={`${pathname == '/lol' && 'active'}`}>
+                            <div className="icon">
+                              <i className="fas fa-star"></i>
+                            </div>
+                            <span>
+                              LOL
+                            </span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="icehocky" className={`${pathname == '/icehocky' && 'active'}`}>
                             <div className="icon">
                               <i className="icon-hockyball"></i>
                             </div>
@@ -305,6 +345,13 @@ export default function Layout({ children }: Props) {
                       </ul>
                     </li>
                   </ul>
+                  <div className={`hamburger ${openMenu2 && 'active act'}`} onClick={() => setOpenMenu2(!openMenu2)}>
+                    <span></span>
+                  </div>
+                  <div className={`hamb ${openMenu2 && 'active act'}`} onClick={() => setOpenMenu2(!openMenu2)}>
+                    <span></span>
+                  </div>
+                  <div className={`dimmer ${openMenu2 && 'active act'}`}></div>
                 </nav>
               </header>
             </div>
@@ -321,21 +368,21 @@ export default function Layout({ children }: Props) {
               <div className="container">
                 <div className="footer-wrapper">
                   <p>
-                    Copyright {new Date().getFullYear().toString()} <Link href="#0" className="text-base">Sports Pepe</Link> All Rights Reserved.
+                    Copyright {new Date().getFullYear().toString()} <Link href="/" className="text-base">Sports Pepe</Link> All Rights Reserved.
                   </p>
                   <ul className="footer-link">
                     <li>
-                      <Link href="#0">
+                      <Link href="/">
                         Affiliate program
                       </Link>
                     </li>
                     <li>
-                      <Link href="#0">
+                      <Link href="/">
                         Terms & conditions
                       </Link>
                     </li>
                     <li>
-                      <Link href="#0">
+                      <Link href="/">
                         Bonus terms & conditions
                       </Link>
                     </li>
