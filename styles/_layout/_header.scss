@@ -1151,6 +1151,7 @@
 	.header-bar {
 		position: relative;
 		width: 35px;
+		min-width: 28px;
 		height: 20px;
 		span {
 			position: absolute;
@@ -1233,7 +1234,7 @@
 			width: 84%;
 		}
 		.right-menu-reature{
-			width: 13%;
+			width: 15%;
 			.language{
 				display: none;
 			}
@@ -1244,7 +1245,10 @@
 	.header-wrapper{
 		.menu-logo-adjust{
 			justify-content: space-between;
-			width: 84%;
+			width: 78%;
+		}
+		.right-menu-reature{
+			width: 20%;
 		}
 	}
 }
