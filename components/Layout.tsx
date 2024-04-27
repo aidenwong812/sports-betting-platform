@@ -73,7 +73,7 @@ export default function Layout({ children }: Props) {
         <header className="header-section header-hidden">
           <div className="header-wrapper">
             <div className="menu-logo-adjust d-flex align-items-center">
-              <div className="logo-menu me-5">
+              <div className="logo-menu">
                 <Link href="/" className="logo">
                   <img src="/img/logo/logo.png" alt="logo" />
                 </Link>
