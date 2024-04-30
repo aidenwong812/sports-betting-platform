@@ -81,6 +81,9 @@ export default function Layout({ children }: Props) {
                   <img src="/img/logo/logo.png" alt="logo" />
                 </Link>
               </div>
+              <div className="logo-menu2 d-flex align-items-center">
+                <img src="/img/logo/logo2.png" alt="logo" />
+              </div>
               <div className={`header-bar ${openMenu && 'active act'}`} onClick={() => setOpenMenu(!openMenu)}>
                 <span></span>
                 <span></span>

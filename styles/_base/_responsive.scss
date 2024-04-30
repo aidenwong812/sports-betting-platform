@@ -1,8 +1,8 @@
 //--Global Responsive css here--//
 @media screen and (max-width: 1199px){
 	h1 {
-		font-size: 56px;
-		line-height: 70.8px;
+		font-size: 48px;
+		line-height: 50.8px;
 	}
 	h3 {
 		font-size: 38px;
@@ -15,8 +15,8 @@
 }
 @media screen and (max-width: 991px){
 	h2 {
-		font-size: 47px;
-		line-height: 64.1px;
+		font-size: 30px;
+		line-height: 56.1px;
 	}
 	h3 {
 		font-size: 34px;
@@ -64,7 +64,7 @@
 }
 @media screen and (max-width: 500px){
 	h1 {
-		font-size: 38px;
+		font-size: 34px;
 		line-height: 42.8px;
 	}
 	h2 {
@@ -369,7 +369,7 @@
 	}
 	.match-table-head{
 		h2{
-			font-size: 21px;
+			font-size: 20px;
 		}
 	}
 	//wallet
@@ -653,6 +653,17 @@
 
 //--table--//
 @media screen and (max-width: 768px) {
+	.header-wrapper{
+		.menu-logo-adjust{
+			.logo-menu{
+				width: 220px;
+				padding-right: 25px;
+			}
+			.logo-menu2{
+				width: 150px;
+			}
+		}
+	}
 	.breadcumd-content{
 		.search-bar{
 			width: 45%!important;
@@ -695,6 +706,18 @@
 	}
 }
 @media screen and (max-width: 425px) {
+	.header-wrapper{
+		.menu-logo-adjust{
+			.logo-menu{
+				width: 200px;
+				padding-right: 10px;
+			}
+			.logo-menu2{
+				width: 80px;
+				padding-right: 15px;
+			}
+		}
+	}
 	.breadcumd-content{
 		.search-bar{
 			width: 45%!important;
@@ -753,6 +776,18 @@
 	}
 }
 @media screen and (max-width: 320px) {
+	.header-wrapper{
+		.menu-logo-adjust{
+			.logo-menu{
+				width: 200px;
+				padding-right: 10px;
+			}
+			.logo-menu2{
+				width: 80px;
+				padding-right: 10px;
+			}
+		}
+	}
 	.table-inner{
 		.table-head{
 			.left-compo{
