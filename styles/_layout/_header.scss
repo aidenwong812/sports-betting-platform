@@ -652,6 +652,7 @@
 	align-items: center;
 	justify-content: space-between;
 	transition: all 0.9s;
+	position: relative;
 	.menu-logo-adjust {
 		width: 74%;
 		justify-content: space-between;
@@ -667,7 +668,7 @@
 		}
 	}
 	.logo-menu2 {
-		max-width: 200px;
+		max-width: 220px;
 		height: auto;
 		padding-right: 50px;
 		img {

@@ -226,6 +226,17 @@
 		}
 	}
 }
+@media (min-width: 1200px){
+	.header-wrapper {
+		.menu-logo-adjust {
+			.logo-menu2 {
+				position: absolute;
+				left: 45%;
+				max-width: 250px;
+			}
+		}
+	}
+}
 @media (min-width: 992px){
 	.container, .container-lg, .container-md, .container-sm {
 		max-width: 100% !important;
@@ -242,6 +253,9 @@
 	}
 }
 @media screen and (max-width: 450px){
+	.breadcumnd-banner {
+		padding: 50px 10px 25px;
+	}
 	.main-tabbing{
 		.progress-slider-items{
 			padding: 20px 5px;
@@ -776,6 +790,9 @@
 	}
 }
 @media screen and (max-width: 320px) {
+	.breadcumnd-banner {
+		padding: 40px 10px 25px;
+	}
 	.header-wrapper{
 		.menu-logo-adjust{
 			.logo-menu{
