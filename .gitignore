@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/contract/node_modules
+/contract
 
 # testing
 /coverage
@@ -28,6 +28,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
