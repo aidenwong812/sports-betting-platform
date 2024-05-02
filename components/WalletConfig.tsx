@@ -20,6 +20,7 @@ const config = getDefaultConfig({
     },
   ],
   chains: [
+    // @ts-ignore
     base,
     baseSepolia,
   ],
