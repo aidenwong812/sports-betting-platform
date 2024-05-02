@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.7",
-    "@rainbow-me/rainbowkit": "^2.0.5",
+    "@rainbow-me/rainbowkit": "^2.0.6",
     "@tanstack/react-query": "^5.29.2",
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
@@ -38,7 +38,7 @@
     "swiper": "^9.0.0",
     "typescript": "5.0.4",
     "viem": "^2.9.16",
-    "wagmi": "^2.5.19"
+    "wagmi": "^2.5.11"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
