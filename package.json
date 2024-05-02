@@ -41,7 +41,9 @@
     "wagmi": "^2.5.19"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@types/bootstrap": "^5.2.6",
-    "@types/react-modal-video": "^1.2.0"
+    "@types/react-modal-video": "^1.2.0",
+    "hardhat": "^2.22.3"
   }
 }
