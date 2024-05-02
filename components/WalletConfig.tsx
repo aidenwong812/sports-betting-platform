@@ -1,4 +1,3 @@
-
 import { http } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
@@ -11,7 +10,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 // Define the connectors for MetaMask and Coinbase Wallet
 
-const RAINBOWKIT_API_KEY = process.env.RAINBOWKIT_API_KEY;
+const RAINBOWKIT_API_KEY = process.env.NEXT_PUBLIC_RAINBOWKIT_API_KEY!;
 
 const connectors = connectorsForWallets([
     {
@@ -21,7 +20,7 @@ const connectors = connectorsForWallets([
   ], 
   {
     appName: 'My RainbowKit App',
-    projectId: "c913df003111f45691562989f3bd308d",
+    projectId: RAINBOWKIT_API_KEY,
 });
 
 // Create the configuration object

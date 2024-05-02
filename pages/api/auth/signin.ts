@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
+import jwt from "jsonwebtoken"
 import clientPromise from "@/lib/mongodb"
 
 const bcrypt = require('bcrypt');
@@ -28,8 +29,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     }
 
+    const tokenData = {
+      id: user._id,
+      username: user.username,
+      email: user.email
+    }
+
+    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: "1d" })
+
     return res.status(200).json({
-      res: "success"
+      res: "success",
+      token,
     })
 
   }

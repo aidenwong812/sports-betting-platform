@@ -13,6 +13,7 @@ import {
   QueryClientProvider,
   QueryClient,
 } from "@tanstack/react-query";
+import AuthProvider from '@/provider/AuthProvider';
 
 const queryClient = new QueryClient();
 
@@ -20,19 +21,21 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
   }, []);
-  
+
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
-          <ThemeProvider enableSystem={false}>
-            <Layout>
-              <Component {...pageProps} />
-              <ToastContainer />
-            </Layout>
-          </ThemeProvider>
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <AuthProvider>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
+            <ThemeProvider enableSystem={false}>
+              <Layout>
+                <Component {...pageProps} />
+                <ToastContainer />
+              </Layout>
+            </ThemeProvider>
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </AuthProvider>
   )
 }

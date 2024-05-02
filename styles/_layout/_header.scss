@@ -37,7 +37,6 @@
         right: 0;
 		padding: 0px 0px 2px 0px;
         width: 288px;
-        height: 100vh;
 		overflow-y: scroll;
 		.right-wrapper-area{
 			background-color: var(--left-menu);
@@ -654,7 +653,7 @@
 	transition: all 0.9s;
 	position: relative;
 	.menu-logo-adjust {
-		width: 74%;
+		width: 69%;
 		justify-content: space-between;
 	}
 	.logo-menu {
@@ -1473,7 +1472,7 @@
   @media screen and (max-width: 1199px) {
     nav.menu {
       .main-list-menu {
-		padding: 110px 15PX 0px;
+		padding: 120px 15PX 0px;
         position: fixed;
         bottom: 0;
         left: 0;
@@ -1597,7 +1596,7 @@
 	  .hamb{
 		display: inline-block;
         position: absolute;
-        top: 119px;
+        top: 135px;
         right: 14px !important;
 		width: 25px;
 		background: var(--white);
