@@ -1,8 +1,6 @@
-import { http } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
-import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
-import { createConfig} from 'wagmi';
 
 require("dotenv").config();
 
@@ -12,25 +10,20 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const RAINBOWKIT_API_KEY = process.env.NEXT_PUBLIC_RAINBOWKIT_API_KEY!;
 
-const connectors = connectorsForWallets([
+const config = getDefaultConfig({
+  appName: 'My RainbowKit App',
+  projectId: RAINBOWKIT_API_KEY,
+  wallets: [
     {
       groupName: 'Connect Wallet',
       wallets: [metaMaskWallet],
     },
-  ], 
-  {
-    appName: 'My RainbowKit App',
-    projectId: RAINBOWKIT_API_KEY,
-});
-
-// Create the configuration object
-const config = createConfig({
-    connectors,
-    chains: [base, baseSepolia],
-    transports: {
-        [base.id]: http(),
-        [baseSepolia.id]: http()
-    },
+  ],
+  chains: [
+    base,
+    baseSepolia,
+  ],
+  ssr: true,
 });
 
 export { config };

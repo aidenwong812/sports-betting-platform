@@ -18,7 +18,6 @@
     "@types/node": "18.16.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
-    "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.2.3",
@@ -39,8 +38,7 @@
     "swiper": "^9.0.0",
     "typescript": "5.0.4",
     "viem": "^2.9.16",
-    "wagmi": "^2.5.19",
-    "web3modal": "^1.9.12"
+    "wagmi": "^2.5.19"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
