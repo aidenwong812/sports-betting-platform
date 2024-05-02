@@ -9,11 +9,11 @@ import Spinner from "@/components/Spinner";
 
 const football = () => {
   const [fixtures1, setFixtures1] = useState<Fixture[]>([])
-  const [fixtures2, setFixtures2] = useState<Fixture[]>([])
-  const [fixtures3, setFixtures3] = useState<Fixture[]>([])
+  // const [fixtures2, setFixtures2] = useState<Fixture[]>([])
+  // const [fixtures3, setFixtures3] = useState<Fixture[]>([])
   const [filteredFixtures1, setFilteredFixtures1] = useState<Fixture[]>([])
-  const [filteredFixtures2, setFilteredFixtures2] = useState<Fixture[]>([])
-  const [filteredFixtures3, setFilteredFixtures3] = useState<Fixture[]>([])
+  // const [filteredFixtures2, setFilteredFixtures2] = useState<Fixture[]>([])
+  // const [filteredFixtures3, setFilteredFixtures3] = useState<Fixture[]>([])
   const [loading, setLoading] = useState(false)
   const [searchWord, setSearchWord] = useState("")
 
@@ -23,15 +23,15 @@ const football = () => {
 
       const res = await Promise.all([
         await getFixtures(Today.toLocaleDateString('en-CA')),
-        await getFixtures(Tomorrow.toLocaleDateString('en-CA')),
-        await getFixtures(DayAfterTomorrow.toLocaleDateString('en-CA'))
+        // await getFixtures(Tomorrow.toLocaleDateString('en-CA')),
+        // await getFixtures(DayAfterTomorrow.toLocaleDateString('en-CA'))
       ])
       setFixtures1(res[0])
-      setFixtures2(res[1])
-      setFixtures3(res[2])
+      // setFixtures2(res[1])
+      // setFixtures3(res[2])
       setFilteredFixtures1(res[0])
-      setFilteredFixtures2(res[1])
-      setFilteredFixtures3(res[2])
+      // setFilteredFixtures2(res[1])
+      // setFilteredFixtures3(res[2])
 
       setLoading(false)
     }
@@ -47,18 +47,18 @@ const football = () => {
             || fixture.teams.away.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
         )
       )
-      setFilteredFixtures2(
-        fixtures2.filter(
-          (fixture) => fixture.teams.home.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
-            || fixture.teams.away.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
-        )
-      )
-      setFilteredFixtures3(
-        fixtures3.filter(
-          (fixture) => fixture.teams.home.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
-            || fixture.teams.away.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
-        )
-      )
+      // setFilteredFixtures2(
+      //   fixtures2.filter(
+      //     (fixture) => fixture.teams.home.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
+      //       || fixture.teams.away.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
+      //   )
+      // )
+      // setFilteredFixtures3(
+      //   fixtures3.filter(
+      //     (fixture) => fixture.teams.home.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
+      //       || fixture.teams.away.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
+      //   )
+      // )
     }
   }, [searchWord])
 
@@ -90,16 +90,16 @@ const football = () => {
                         <div className="match-table-head pb-20">
                           <h2>Prematch {Tomorrow.toLocaleDateString('en-CA')}</h2>
                         </div>
-                        <div className="table-wrap mb-5">
+                        {/* <div className="table-wrap mb-5">
                           <DisplayFixtures fixtures={filteredFixtures2} />
-                        </div>
+                        </div> */}
                         {/* <!--table premiar--> */}
                         <div className="match-table-head pb-20">
                           <h2>Prematch {DayAfterTomorrow.toLocaleDateString('en-CA')}</h2>
                         </div>
-                        <div className="table-wrap">
+                        {/* <div className="table-wrap">
                           <DisplayFixtures fixtures={filteredFixtures3} />
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     {/* <!--all tab End--> */}

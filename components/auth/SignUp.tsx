@@ -1,29 +1,8 @@
-import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { FormEvent } from "react";
-import { toast } from "react-toastify";
+import { useAuth } from "@/provider/AuthProvider";
 
 const SignUp = () => {
-  const router = useRouter()
-  
-  const handleFormSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const email = formData.get("email33") as string;
-    const password = formData.get("password") as string;
-    const username = formData.get("username") as string
-
-    // Perform your form submission logic here
-    const res = await axios.post("/api/auth/signup", { username, email, password });
-    if (res.status === 200 && res.data.res === "success") {
-      router.push('/#')
-    } else {
-      if (res.data?.error) {
-        toast.error(res.data.error)
-      }
-    }
-  }
+  const { register, userEmail, setUserEmail, userName, setUserName, userPassword, setUserPassword } = useAuth()
 
   return (
     <>
@@ -43,24 +22,46 @@ const SignUp = () => {
             <button type="button" className="btn-close cross-btn" data-bs-dismiss="modal" aria-label="Close"></button>
             <div className="modal-body">
               <div className="register-from">
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={register}>
                   <div className="items">
                     <div className="form-input">
                       <label htmlFor="username" className="form-label">Username</label>
-                      <input type="text" id="username" name="username" placeholder="Your Username" />
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Your Username"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="items">
                     <div className="form-input">
                       <label htmlFor="email33" className="form-label">Email</label>
-                      <input type="email" id="email33" name="email33" placeholder="Your Email" />
+                      <input
+                        type="email"
+                        id="email33"
+                        name="email33"
+                        placeholder="Your Email"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="items">
                     <div className="form-input">
                       <label htmlFor="password-field" className="form-label">Password</label>
                       <div className="form-group">
-                        <input id="password-field2" type="password" className="form-control" placeholder="Your Password" name="password" />
+                        <input
+                          id="password-field2"
+                          type="password"
+                          className="form-control"
+                          placeholder="Your Password"
+                          name="password"
+                          value={userPassword}
+                          onChange={(e) => setUserPassword(e.target.value)}
+                        />
                         <span id="#password-field2" className="fa fa-fw fa-eye field-icon toggle-password2"></span>
                       </div>
                     </div>
@@ -88,7 +89,7 @@ const SignUp = () => {
                     </div>
                   </div>
                   <div className="items text-center">
-                    <button type="submit" className="cmn--btn cd-popup-close repopup">
+                    <button type="submit" className="cmn--btn cd-popup-close repopup"  data-bs-dismiss="modal" aria-label="Close">
                       <span>Start Playing</span>
                     </button>
                   </div>

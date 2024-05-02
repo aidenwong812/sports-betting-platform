@@ -2,64 +2,25 @@ import { useTheme } from 'next-themes';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useId, useState } from 'react';
-import Select, { StylesConfig } from 'react-select';
+import React, { ReactNode, useState } from 'react';
 
+import { useAuth } from '@/provider/AuthProvider';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import { WalletConnectButton } from './ConnectButton';
 
-interface Option {
-  value: string;
-  label: string;
-}
-const options = [
-  { value: 'EN', label: 'EN' },
-  { value: 'BN', label: 'BN' },
-  { value: 'AR', label: 'AR' },
-];
-const langOptions = [
-  { value: 'English', label: 'English' },
-  { value: 'Spanish', label: 'Spanish' }
-]
-const decimalOptions = [
-  { value: 'Decimal', label: 'Decimal' },
-  { value: 'Odds', label: 'Odds' }
-]
 type Props = {
   children: ReactNode;
   // Other props
 }
 export default function Layout({ children }: Props) {
   const { theme, setTheme } = useTheme();
-  const [selectedOption, setSelectedOption] = useState<Option | null | unknown>(options[0]);
-  const [selectedLangOption, setSelectedLangOption] = useState<Option | null | unknown>(langOptions[0]);
-  const [selectedDacimalOption, setSelectedDacimalOption] = useState<Option | null | unknown>(decimalOptions[0]);
+  const { isAuthenticated, logout } = useAuth()
   const [openMenu, setOpenMenu] = useState(false)
   const [openMenu2, setOpenMenu2] = useState(false)
-  const [openWallet, setOpenWallet] = useState(false);
 
   const inactiveTheme = theme === "light" ? "dark" : "light";
   const { pathname } = useRouter()
-
-  const customStyles: StylesConfig = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: theme !== "dark" ? "#1F493F" : "#D5DDEC",
-      borderColor: '#1F493F',
-      border: state.isFocused ? '0' : '0',
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected ? '#ffffff' : '#000',
-      backgroundColor: state.isSelected ? '#1F493F' : '#ffffff'
-    }),
-    singleValue: base => ({
-      ...base,
-      color: theme !== "dark" ? "#fff" : "#000",
-      border: 'none'
-    }),
-  };
 
   return (
     <>
@@ -107,18 +68,32 @@ export default function Layout({ children }: Props) {
                 <img src={`/img/${theme === 'dark' ? 'moon' : 'sun'}.png`} alt="" />
               </div>
               <div className="signup-area">
-                <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <span>
-                    Log In
-                  </span>
-                </Link>
-                <Link href="#0" className="cmn--btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                  <span>
-                    Sign Up
-                  </span>
-                </Link>
+                {
+                  isAuthenticated ? (
+                    <>
+                      <button className="btn--two" onClick={logout}>
+                        <span>
+                          Log out
+                        </span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <span>
+                          Log In
+                        </span>
+                      </Link>
+                      <Link href="#0" className="cmn--btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        <span>
+                          Sign Up
+                        </span>
+                      </Link>
+                    </>
+                  )
+                }
 
-                {openWallet && <WalletConnectButton />}
+                {isAuthenticated && <WalletConnectButton />}
 
               </div>
             </div>
@@ -542,38 +517,6 @@ export default function Layout({ children }: Props) {
                                   <span>4.60</span>
                                 </div>
                               </div>
-                              <p>
-                                Add 2 more outcome(s) with odds greater than 1.4 to get x1.08
-                              </p>
-                              <div className="match-items match-progress">
-                                <div className="match-items-left">
-                                  <div className="prabox-wrap">
-                                    <div className="terminal-bar">
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
-                                    </div>
-                                    <div className="bar-count">
-                                      <p>x1.08</p>
-                                      <p>x1,15</p>
-                                      <p>x1.20</p>
-                                      <p>x1.50</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="match-items-right">
-                                  <div className="icon">
-                                    <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                  </div>
-                                  <span>1.00</span>
-                                </div>
-                              </div>
                               <div className="match-items match-odds">
                                 <div className="match-items-left">
                                   <div className="cont">
@@ -622,134 +565,6 @@ export default function Layout({ children }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="accordion-box">
-                  <div className="accordion" id="accordionExample">
-                    <div className="accordion-item">
-                      <div className="accordion-header" id="headingThree">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          <span className="icon"><i className="fa-sharp fa-solid fa-gear"></i></span>
-                          <span>Settings</span>
-                        </button>
-                        <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                          <div className="accordion-body">
-                            <div className="select-wrap">
-                              <div className="select-one">
-                                <Select
-                                  instanceId={useId()}
-                                  defaultValue={selectedLangOption}
-                                  onChange={setSelectedLangOption}
-                                  options={langOptions}
-                                  components={{
-                                    IndicatorSeparator: () => null,
-                                  }}
-                                  styles={customStyles}
-                                />
-
-                              </div>
-                              <div className="select-two">
-                                <Select
-                                  instanceId={useId()}
-                                  defaultValue={selectedDacimalOption}
-                                  onChange={setSelectedDacimalOption}
-                                  options={decimalOptions}
-                                  components={{
-                                    IndicatorSeparator: () => null,
-                                  }}
-                                  styles={customStyles}
-                                />
-
-                              </div>
-                            </div>
-                            <Link href="#0" className="condition-box">
-                              Terms & Conditions
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="popular-bets">
-                <div className="head">
-                  <h6>
-                    Popular bets
-                  </h6>
-                </div>
-                <ul className="popoular-body">
-                  <li className="popular-items">
-                    <label className="popular-itmes-left">
-                      <input className="form-check-input" type="checkbox" id="flexCheckDefault1" />
-                      <span className="icon">
-                        <i className="icon-football"></i>
-                      </span>
-                      <span className="cont">
-                        <span className="text1">
-                          1x2
-                        </span>
-                        <span className="text2">
-                          Prance
-                        </span>
-                        <span className="text3">
-                          France - Austria
-                        </span>
-                      </span>
-                    </label>
-                    <div className="popular-itmes-right">
-                      <span>
-                        2.37
-                      </span>
-                    </div>
-                  </li>
-                  <li className="popular-items">
-                    <label className="popular-itmes-left">
-                      <input className="form-check-input" type="checkbox" id="flexCheckDefault2" />
-                      <span className="icon">
-                        <i className="icon-football"></i>
-                      </span>
-                      <span className="cont">
-                        <span className="text1">
-                          1x2
-                        </span>
-                        <span className="text2">
-                          Turkey
-                        </span>
-                        <span className="text3">
-                          Turkey - Luxembourg
-                        </span>
-                      </span>
-                    </label>
-                    <div className="popular-itmes-right">
-                      <span>
-                        1.37
-                      </span>
-                    </div>
-                  </li>
-                  <li className="popular-items">
-                    <label className="popular-itmes-left">
-                      <input className="form-check-input" type="checkbox" id="flexCheckDefault3" />
-                      <span className="icon">
-                        <i className="icon-football"></i>
-                      </span>
-                      <span className="cont">
-                        <span className="text1">
-                          1x2
-                        </span>
-                        <span className="text2">
-                          Alkmaar
-                        </span>
-                        <span className="text3">
-                          Alkmaar - Apollon
-                        </span>
-                      </span>
-                    </label>
-                    <div className="popular-itmes-right">
-                      <span>
-                        3.47
-                      </span>
-                    </div>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -759,7 +574,7 @@ export default function Layout({ children }: Props) {
         {/* // <!--Main Body Section End--> */}
 
         {/* // <!-- Popup Section Start --> */}
-        <SignIn setOpenWallet={setOpenWallet} />
+        <SignIn />
         <SignUp />
         {/* // <!--menu modal--> */}
         <div className="modal right-menu-modal fade" id="exampleModal3" tabIndex={-1} aria-hidden="true">
@@ -907,38 +722,6 @@ export default function Layout({ children }: Props) {
                                         <span>4.60</span>
                                       </div>
                                     </div>
-                                    <p>
-                                      Add 2 more outcome(s) with odds greater than 1.4 to get x1.08
-                                    </p>
-                                    <div className="match-items match-progress">
-                                      <div className="match-items-left">
-                                        <div className="prabox-wrap">
-                                          <div className="terminal-bar">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                          </div>
-                                          <div className="bar-count">
-                                            <p>x1.08</p>
-                                            <p>x1,15</p>
-                                            <p>x1.20</p>
-                                            <p>x1.50</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="match-items-right">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                        </div>
-                                        <span>1.00</span>
-                                      </div>
-                                    </div>
                                     <div className="match-items match-odds">
                                       <div className="match-items-left">
                                         <div className="cont">
@@ -987,132 +770,6 @@ export default function Layout({ children }: Props) {
                           </div>
                         </div>
                       </div>
-                      <div className="accordion-box">
-                        <div className="accordion" id="accordionExamplemy">
-                          <div className="accordion-item">
-                            <div className="accordion-header" id="headingThree03">
-                              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <span className="icon"><i className="fa-sharp fa-solid fa-gear"></i></span>
-                                <span>Settings</span>
-                              </button>
-                              <div id="collapseThreethree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                <div className="accordion-body">
-                                  <Link href="#0" className="condition-box">
-                                    Terms & Conditions
-                                  </Link>
-                                  <div className="select-wrap">
-                                    <div className="select-one">
-                                      <Select
-                                        instanceId={useId()}
-                                        defaultValue={selectedLangOption}
-                                        onChange={setSelectedLangOption}
-                                        options={langOptions}
-                                        components={{
-                                          IndicatorSeparator: () => null,
-                                        }}
-                                        styles={customStyles}
-                                      />
-                                    </div>
-                                    <div className="select-two">
-                                      <Select
-                                        instanceId={useId()}
-                                        defaultValue={selectedDacimalOption}
-                                        onChange={setSelectedDacimalOption}
-                                        options={decimalOptions}
-                                        components={{
-                                          IndicatorSeparator: () => null,
-                                        }}
-                                        styles={customStyles}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="popular-bets">
-                      <div className="head">
-                        <h6>
-                          Popular bets
-                        </h6>
-                      </div>
-                      <ul className="popoular-body">
-                        <li className="popular-items">
-                          <label className="popular-itmes-left">
-                            <input className="form-check-input" type="checkbox" id="flexCheckDefault4" />
-                            <span className="icon">
-                              <i className="icon-football"></i>
-                            </span>
-                            <span className="cont">
-                              <span className="text1">
-                                1x2
-                              </span>
-                              <span className="text2">
-                                Prance
-                              </span>
-                              <span className="text3">
-                                France - Austria
-                              </span>
-                            </span>
-                          </label>
-                          <div className="popular-itmes-right">
-                            <span>
-                              2.37
-                            </span>
-                          </div>
-                        </li>
-                        <li className="popular-items">
-                          <label className="popular-itmes-left">
-                            <input className="form-check-input" type="checkbox" id="flexCheckDefault5" />
-                            <span className="icon">
-                              <i className="icon-football"></i>
-                            </span>
-                            <span className="cont">
-                              <span className="text1">
-                                1x2
-                              </span>
-                              <span className="text2">
-                                Turkey
-                              </span>
-                              <span className="text3">
-                                Turkey - Luxembourg
-                              </span>
-                            </span>
-                          </label>
-                          <div className="popular-itmes-right">
-                            <span>
-                              1.37
-                            </span>
-                          </div>
-                        </li>
-                        <li className="popular-items">
-                          <label className="popular-itmes-left">
-                            <input className="form-check-input" type="checkbox" id="flexCheckDefault6" />
-                            <span className="icon">
-                              <i className="icon-football"></i>
-                            </span>
-                            <span className="cont">
-                              <span className="text1">
-                                1x2
-                              </span>
-                              <span className="text2">
-                                Alkmaar
-                              </span>
-                              <span className="text3">
-                                Alkmaar - Apollon
-                              </span>
-                            </span>
-                          </label>
-                          <div className="popular-itmes-right">
-                            <span>
-                              3.47
-                            </span>
-                          </div>
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 </div>
