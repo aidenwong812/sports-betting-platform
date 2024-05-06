@@ -48,7 +48,6 @@ const useAuthFlow = () => {
       { email: userEmail, password: userPassword }
     )
     if (res.status === 200 && res.data.res === "success") {
-      console.log(res.data)
       toast.success("Log in successful")
       localStorage.setItem("token", res.data.token)
       setUserData(res.data.token)
@@ -102,7 +101,6 @@ const useAuthFlow = () => {
     loading,
     isAuthenticated,
     userData,
-    // authStatus,
     logout,
   }
 }
