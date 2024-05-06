@@ -14,6 +14,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import AuthProvider from '@/provider/AuthProvider';
+import BetProvider from '@/provider/BetProvider';
 
 const queryClient = new QueryClient();
 
@@ -27,12 +28,14 @@ export default function App({ Component, pageProps }: AppProps) {
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
-            <ThemeProvider enableSystem={false}>
-              <Layout>
-                <Component {...pageProps} />
-                <ToastContainer />
-              </Layout>
-            </ThemeProvider>
+            <BetProvider>
+              <ThemeProvider enableSystem={false}>
+                <Layout>
+                  <Component {...pageProps} />
+                  <ToastContainer />
+                </Layout>
+              </ThemeProvider>
+            </BetProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>

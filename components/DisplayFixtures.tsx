@@ -46,7 +46,7 @@ const DisplayFixtures = ({ fixtures }: { fixtures: Fixture[] }) => {
                   </div>
                 </li>
               </ul>
-              <DisplayOdds fixtureId={fixture.id} />
+              <DisplayOdds fixture={{ fixture, league, teams }} />
             </div>
           </div>
         ))
