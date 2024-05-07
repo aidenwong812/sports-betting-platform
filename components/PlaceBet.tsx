@@ -5,8 +5,6 @@ import Link from "next/link"
 const PlaceBet = () => {
   const { betType, setBetType, selectedFixture, selectedOdd } = useBet()
   const [betAmount, setBetAmount] = useState(0)
-  console.log(selectedFixture)
-  console.log(selectedOdd)
 
   return (
     <div className="right-site-menu">
@@ -86,9 +84,9 @@ const PlaceBet = () => {
                                   <div className="cont">
                                     <span>
                                       {
-                                        selectedOdd.value === "Home"
+                                        selectedOdd[0].value === "Home"
                                           ? selectedFixture.teams.home.name
-                                          : selectedOdd.value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                          : selectedOdd[0].value === "Away" ? selectedFixture.teams.away.name : "Draw"
                                       }
                                     </span>
                                     <span className="winner">Match Winner</span>
@@ -98,7 +96,7 @@ const PlaceBet = () => {
                                   <div className="icon">
                                     <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
                                   </div>
-                                  <span>{selectedOdd.odd}</span>
+                                  <span>{selectedOdd[0].odd}</span>
                                 </div>
                               </div>
                             </div>
@@ -131,7 +129,7 @@ const PlaceBet = () => {
                         <div className="possible-win">
                           <span>Possible win</span>
                           <span className="amount">
-                            ${(betAmount * selectedOdd.odd || 0).toFixed(2)}
+                            ${(betAmount * selectedOdd[0].odd || 0).toFixed(2)}
                           </span>
                         </div>
                         <div className="combo-footer">
@@ -163,7 +161,13 @@ const PlaceBet = () => {
                                   <img src="/img/header/right-icon/footaball.svg" alt="icon" />
                                 </div>
                                 <div className="cont">
-                                  <span>Scotland</span>
+                                  <span>
+                                    {
+                                      selectedOdd[0].value === "Home"
+                                        ? selectedFixture.teams.home.name
+                                        : selectedOdd[0].value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                    }
+                                  </span>
                                   <span className="winner">Match Winner</span>
                                 </div>
                               </div>
@@ -171,26 +175,36 @@ const PlaceBet = () => {
                                 <div className="icon">
                                   <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
                                 </div>
-                                <span>3.20</span>
+                                <span>{selectedOdd[0].odd}</span>
                               </div>
                             </div>
-                            <div className="match-items">
-                              <div className="match-items-left">
-                                <div className="icon">
-                                  <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                            {
+                              selectedOdd[1] && (
+                                <div className="match-items">
+                                  <div className="match-items-left">
+                                    <div className="icon">
+                                      <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                                    </div>
+                                    <div className="cont">
+                                      <span>
+                                        {
+                                          selectedOdd[1].value === "Home"
+                                            ? selectedFixture.teams.home.name
+                                            : selectedOdd[1].value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                        }
+                                      </span>
+                                      <span className="winner">Match Winner</span>
+                                    </div>
+                                  </div>
+                                  <div className="match-items-right">
+                                    <div className="icon">
+                                      <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                    </div>
+                                    <span>{selectedOdd[1].odd}</span>
+                                  </div>
                                 </div>
-                                <div className="cont">
-                                  <span>Draw</span>
-                                  <span className="winner">Match Winner</span>
-                                </div>
-                              </div>
-                              <div className="match-items-right">
-                                <div className="icon">
-                                  <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                </div>
-                                <span>4.60</span>
-                              </div>
-                            </div>
+                              )
+                            }
                             <div className="match-items match-odds">
                               <div className="match-items-left">
                                 <div className="cont">
@@ -201,7 +215,13 @@ const PlaceBet = () => {
                                 <div className="icon">
                                   <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
                                 </div>
-                                <span>12.19</span>
+                                <span>
+                                  {
+                                    selectedOdd.length > 1
+                                      ? (parseFloat(selectedOdd[0].odd) + parseFloat(selectedOdd[1].odd)).toFixed(2)
+                                      : selectedOdd[0].odd
+                                  }
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -234,7 +254,7 @@ const PlaceBet = () => {
                       <div className="possible-win">
                         <span>Possible win</span>
                         <span className="amount">
-                          ${(betAmount * selectedOdd.odd || 0).toFixed(2)}
+                          ${(betAmount * selectedOdd[0].odd || 0).toFixed(2)}
                         </span>
                       </div>
                       <div className="combo-footer">

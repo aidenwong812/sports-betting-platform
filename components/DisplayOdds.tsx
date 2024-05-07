@@ -4,7 +4,7 @@ import { Fixture, Odds } from "@/lib/types/fixture"
 import { useBet } from "@/provider/BetProvider"
 
 const DisplayOdds = ({ fixture }: { fixture: Fixture }) => {
-  const { setSelectedFixture, setSelectedOdd } = useBet()
+  const { betType, setSelectedFixture, setSelectedOdd } = useBet()
   const [odds, setOdds] = useState<Odds[]>([])
 
   useEffect(() => {
@@ -15,7 +15,34 @@ const DisplayOdds = ({ fixture }: { fixture: Fixture }) => {
 
   const handleOddClick = (id: number) => {
     setSelectedFixture(fixture)
-    setSelectedOdd(odds[id])
+    if (betType === 'combo') {
+      setSelectedOdd(prevSelectedOdd => {
+        const newOdd = odds[id]
+        if (newOdd.value === 'Home' || newOdd.value === 'Away') {
+          const sameValueOddIndex = prevSelectedOdd.findIndex(
+            odd => odd.value === 'Home' || odd.value === 'Away'
+          )
+          if (sameValueOddIndex !== -1) {
+            const newSelectedOdd = [
+              ...prevSelectedOdd.slice(0, sameValueOddIndex),
+              ...prevSelectedOdd.slice(sameValueOddIndex + 1),
+              newOdd,
+            ]
+            return newSelectedOdd
+          }
+        }
+        if (prevSelectedOdd[prevSelectedOdd.length - 1] === newOdd) {
+          return prevSelectedOdd
+        } else if (prevSelectedOdd.length >= 2) {
+          const newSelectedOdd = [...prevSelectedOdd.slice(1), newOdd]
+          return newSelectedOdd
+        } else {
+          return [...prevSelectedOdd, newOdd]
+        }
+      })
+    } else {
+      setSelectedOdd([odds[id]])
+    }
   }
 
   return (
