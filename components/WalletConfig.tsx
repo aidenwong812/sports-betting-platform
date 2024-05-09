@@ -1,6 +1,7 @@
-import { base, baseSepolia } from 'wagmi/chains';
+import { base, sepolia } from 'wagmi/chains';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
+import { http } from 'viem';
 
 require("dotenv").config();
 
@@ -20,10 +21,13 @@ const config = getDefaultConfig({
     },
   ],
   chains: [
-    // @ts-ignore
     base,
-    baseSepolia,
+    sepolia,
   ],
+  transports: {
+    [base.id]: http(),
+    [sepolia.id]: http(),
+  },
   ssr: true,
 });
 

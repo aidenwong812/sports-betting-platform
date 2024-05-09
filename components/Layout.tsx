@@ -7,7 +7,7 @@ import React, { ReactNode, useState } from 'react';
 import { useAuth } from '@/provider/AuthProvider';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
-import { WalletConnectButton } from './ConnectButton';
+import { WalletConnectButton } from './WalletConnectButton';
 import PlaceBet from './PlaceBet';
 
 type Props = {

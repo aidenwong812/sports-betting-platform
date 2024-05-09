@@ -1,10 +1,35 @@
-import { useState } from "react"
-import { useBet } from "@/provider/BetProvider"
 import Link from "next/link"
+import { formatUnits, parseUnits } from "viem"
+import { useBet } from "@/provider/BetProvider"
+import { useWeb3 } from "@/provider/Web3Provider"
+import { useEffect } from "react"
 
 const PlaceBet = () => {
-  const { betType, setBetType, selectedFixture, selectedOdd } = useBet()
-  const [betAmount, setBetAmount] = useState(0)
+  const {
+    betAmount,
+    setBetAmount,
+    betType,
+    setBetType,
+    selectedFixture,
+    selectedOdd,
+  } = useBet()
+  const {
+    approvePaymentToken,
+    decimalData,
+    walletBalance,
+    placeBet,
+    receipt,
+  } = useWeb3()
+
+  const handlePlaceBet = () => {
+    approvePaymentToken("0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14", parseUnits((betAmount || 0).toString(), decimalData || 18))
+  }
+
+  useEffect(() => {
+    if (receipt?.status) {
+      placeBet()
+    }
+  }, [receipt?.status])
 
   return (
     <div className="right-site-menu">
@@ -16,7 +41,7 @@ const PlaceBet = () => {
               <span className="text-blabce">Balance</span>
             </div>
             <span className="blance">
-              $0
+              {`$${formatUnits(walletBalance || BigInt(0), decimalData || 18) || 0.00}`}
             </span>
           </div>
           <div className="betslip-wrapper">
@@ -31,7 +56,7 @@ const PlaceBet = () => {
             </Link>
           </div>
           {
-            selectedFixture && selectedOdd && (
+            selectedFixture && selectedOdd.length > 0 && (
               <div className="combo-box">
                 <ul className="nav">
                   <li className="nav-item">
@@ -70,7 +95,7 @@ const PlaceBet = () => {
                         <div className="close-box">
                           <div className="close-items">
                             <div className="close-head">
-                              <span>{selectedFixture.teams.home.name} vs {selectedFixture.teams.away.name}</span>
+                              <span>{selectedFixture.teams?.home?.name} vs {selectedFixture.teams?.away?.name}</span>
                               <span className="close">
                                 <i className="fas fa-xmark"></i>
                               </span>
@@ -119,7 +144,7 @@ const PlaceBet = () => {
                               type="number"
                               placeholder="Bet Amount"
                               value={betAmount}
-                              onChange={e => setBetAmount(parseInt(e.target.value))}
+                              onChange={e => setBetAmount(parseFloat(e.target.value))}
                             />
                             <button type="submit">
                               Max
@@ -133,7 +158,7 @@ const PlaceBet = () => {
                           </span>
                         </div>
                         <div className="combo-footer">
-                          <Link href="#0" className="cmn--btn">
+                          <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
                             <span> Place Bet ${betAmount || 0}</span>
                           </Link>
                         </div>
@@ -244,7 +269,7 @@ const PlaceBet = () => {
                             type="number"
                             placeholder="Bet Amount"
                             value={betAmount}
-                            onChange={e => setBetAmount(parseInt(e.target.value))}
+                            onChange={e => setBetAmount(parseFloat(e.target.value))}
                           />
                           <button type="submit">
                             Max
@@ -258,7 +283,7 @@ const PlaceBet = () => {
                         </span>
                       </div>
                       <div className="combo-footer">
-                        <Link href="#0" className="cmn--btn">
+                        <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
                           <span> Place Bet ${betAmount || 0}</span>
                         </Link>
                       </div>
