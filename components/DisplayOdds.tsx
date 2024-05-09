@@ -4,7 +4,7 @@ import { Fixture, Odds } from "@/lib/types/fixture"
 import { useBet } from "@/provider/BetProvider"
 
 const DisplayOdds = ({ fixture }: { fixture: Fixture }) => {
-  const { betType, setSelectedFixture, setSelectedOdd } = useBet()
+  const { betType, selectedFixture, setSelectedFixture, setSelectedOdd } = useBet()
   const [odds, setOdds] = useState<Odds[]>([])
 
   useEffect(() => {
@@ -15,8 +15,10 @@ const DisplayOdds = ({ fixture }: { fixture: Fixture }) => {
 
   const handleOddClick = (id: number) => {
     setSelectedFixture(fixture)
-    if (betType === 'combo') {
-      setSelectedOdd(prevSelectedOdd => {
+    if (fixture !== selectedFixture || betType === 'single') {
+      setSelectedOdd([odds[id]])
+    } else {
+      setSelectedOdd((prevSelectedOdd: Odds[]) => {
         const newOdd = odds[id]
         if (newOdd.value === 'Home' || newOdd.value === 'Away') {
           const sameValueOddIndex = prevSelectedOdd.findIndex(
@@ -40,8 +42,6 @@ const DisplayOdds = ({ fixture }: { fixture: Fixture }) => {
           return [...prevSelectedOdd, newOdd]
         }
       })
-    } else {
-      setSelectedOdd([odds[id]])
     }
   }
 

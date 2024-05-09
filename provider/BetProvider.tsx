@@ -1,9 +1,9 @@
 import useBettingData from "@/hooks/useBetting"
 import { createContext, useContext, useMemo } from "react"
 
-const BetContext = createContext(null)
+const BetContext = createContext<any>(null)
 
-const BetProvider = ({ children }) => {
+const BetProvider = ({ children }: { children: React.ReactNode }) => {
   const betData = useBettingData()
 
   const value = useMemo(

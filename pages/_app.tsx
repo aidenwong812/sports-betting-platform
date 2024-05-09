@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-query";
 import AuthProvider from '@/provider/AuthProvider';
 import BetProvider from '@/provider/BetProvider';
+import Web3Provider from '@/provider/Web3Provider';
 
 const queryClient = new QueryClient();
 
@@ -29,12 +30,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider modalSize='compact' theme={darkTheme()}>
             <BetProvider>
-              <ThemeProvider enableSystem={false}>
-                <Layout>
-                  <Component {...pageProps} />
-                  <ToastContainer />
-                </Layout>
-              </ThemeProvider>
+              <Web3Provider>
+                <ThemeProvider enableSystem={false}>
+                  <Layout>
+                    <Component {...pageProps} />
+                    <ToastContainer />
+                  </Layout>
+                </ThemeProvider>
+              </Web3Provider>
             </BetProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
