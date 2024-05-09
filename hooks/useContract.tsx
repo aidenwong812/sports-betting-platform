@@ -1,9 +1,11 @@
 import { useAccount, useReadContracts } from "wagmi";
 import { sepolia } from "viem/chains";
-import { parseUnits } from "viem";
+import { getAddress, parseUnits } from "viem";
 import { erc20Contract } from "@/lib/const/contracts";
 import { useBet } from "@/provider/BetProvider";
 import usePlaceBet from "./usePlaceBet";
+import useApprovePaymentToken from "./useApprovePaymentToken";
+import { useEffect } from "react";
 
 const useContract = () => {
   const chainId = sepolia.id
@@ -36,12 +38,18 @@ const useContract = () => {
 
   const [balanceData, decimalData] = erc20Data || [];
 
+  const { approvePaymentToken, isFetched, receipt } = useApprovePaymentToken({
+    chainId,
+    contractToApprove: getAddress("0x45986706d9F3d1d8DfBbAf44f3ABcc7724FA3D43"),
+    approveAmount: parseUnits((betAmount || 0).toString(), decimalData || 18)
+  })
+
   const { placeBet, isLoading: loading } = usePlaceBet({
     account,
     bets: [
       BigInt(selectedFixture?.fixture?.id || 0),
       selectedOdd[0]?.value === 'Home'
-        ? 0 
+        ? 0
         : selectedOdd[0]?.value === 'Away' ? 2 : 1 || 0,
       selectedOdd[0]?.odd * 100 || 0,
       parseUnits((betAmount || 0).toString(), decimalData || 18),
@@ -49,13 +57,34 @@ const useContract = () => {
     chainId,
   })
 
+  useEffect(() => {
+    if (isFetched && !!receipt) {
+      switch (receipt.status) {
+        case 'success': {
+          console.log('!!!!!!!!!!!!!!!!!')
+          placeBet()
+          // onSuccess?.(receipt);
+          // onSettled?.(receipt, error);
+          break;
+        }
+        case 'reverted': {
+          // onSettled?.(receipt, error);
+          break;
+        }
+      }
+    }
+  }, [isFetched, receipt])
+
   return {
     account,
     isConnected,
-    placeBet,
-    loading,
+    // placeBet,
+    approvePaymentToken,
+    // loading,
     walletBalance: balanceData,
     decimalData,
+    isFetched,
+    receipt,
   }
 }
 

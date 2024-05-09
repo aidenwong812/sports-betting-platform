@@ -1,23 +1,19 @@
 import { createContext, useContext, useMemo } from "react"
 import { useChainId } from "wagmi";
 import useContract from "@/hooks/useContract";
-import useApprovePaymentToken from "@/hooks/useApprovePaymentToken";
 
 const Web3Context = createContext<any>(null)
 
 const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const chainId = useChainId()
   const contract = useContract()
-  const { approvePaymentToken, receipt } = useApprovePaymentToken()
 
   const value = useMemo(
     () => ({
       ...contract,
       chainId,
-      approvePaymentToken,
-      receipt,
     }),
-    [contract, chainId, approvePaymentToken, receipt],
+    [contract, chainId],
   )
 
   return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>
