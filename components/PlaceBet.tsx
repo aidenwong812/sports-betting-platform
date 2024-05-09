@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { formatUnits, parseUnits } from "viem"
+import { formatUnits } from "viem"
 import { useBet } from "@/provider/BetProvider"
 import { useWeb3 } from "@/provider/Web3Provider"
 import { useEffect } from "react"
@@ -17,19 +17,11 @@ const PlaceBet = () => {
     approvePaymentToken,
     decimalData,
     walletBalance,
-    placeBet,
-    receipt,
   } = useWeb3()
 
-  const handlePlaceBet = () => {
-    approvePaymentToken("0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14", parseUnits((betAmount || 0).toString(), decimalData || 18))
+  const handlePlaceBet = async () => {
+    await approvePaymentToken()
   }
-
-  useEffect(() => {
-    if (receipt?.status) {
-      placeBet()
-    }
-  }, [receipt?.status])
 
   return (
     <div className="right-site-menu">
