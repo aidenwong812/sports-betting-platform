@@ -1,9 +1,9 @@
 import { createContext, useContext, useMemo } from "react"
 import useAuthFlow from "../hooks/useAuthFlow"
 
-const AuthContext = createContext(null)
+const AuthContext = createContext<any>(null)
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authData = useAuthFlow()
 
   const value = useMemo(
