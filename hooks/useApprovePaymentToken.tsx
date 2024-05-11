@@ -1,7 +1,6 @@
 import { Address, Chain } from "viem";
 import { useSimulateContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { erc20Contract } from "@/lib/const/contracts";
-import { useEffect } from "react";
 
 const useApprovePaymentToken = ({ chainId, contractToApprove, approveAmount }: { chainId: Chain['id'], contractToApprove: Address, approveAmount: bigint }) => {
   const {
@@ -28,8 +27,8 @@ const useApprovePaymentToken = ({ chainId, contractToApprove, approveAmount }: {
   const {
     isFetching: isFetchingReceipt,
     isLoading: isLoadingReceipt,
-    data: receipt,
-    isFetched,
+    data: approveReceipt,
+    isFetched: isApproveFetched,
     isSuccess,
     isError: isErrorReceipt,
     error: errorTransaction,
@@ -46,8 +45,9 @@ const useApprovePaymentToken = ({ chainId, contractToApprove, approveAmount }: {
 
   return {
     approvePaymentToken,
-    isFetched,
-    receipt,
+    isApproveFetched,
+    approveReceipt,
+    errorTransaction,
   }
 }
 

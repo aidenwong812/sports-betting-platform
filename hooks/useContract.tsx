@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAccount, useReadContracts } from "wagmi";
 import { sepolia } from "viem/chains";
 import { getAddress, parseUnits } from "viem";
@@ -5,7 +6,7 @@ import { erc20Contract } from "@/lib/const/contracts";
 import { useBet } from "@/provider/BetProvider";
 import usePlaceBet from "./usePlaceBet";
 import useApprovePaymentToken from "./useApprovePaymentToken";
-import { useEffect } from "react";
+import saveFixture from "@/lib/api/saveFixture";
 
 const useContract = () => {
   const chainId = sepolia.id
@@ -38,13 +39,13 @@ const useContract = () => {
 
   const [balanceData, decimalData] = erc20Data || [];
 
-  const { approvePaymentToken, isFetched, receipt } = useApprovePaymentToken({
+  const { approvePaymentToken, isApproveFetched, approveReceipt } = useApprovePaymentToken({
     chainId,
     contractToApprove: getAddress("0x45986706d9F3d1d8DfBbAf44f3ABcc7724FA3D43"),
     approveAmount: parseUnits((betAmount || 0).toString(), decimalData || 18)
   })
 
-  const { placeBet, isLoading: loading } = usePlaceBet({
+  const { placeBet, isLoading: loading, isBetFetched, betReceipt } = usePlaceBet({
     account,
     bets: [
       BigInt(selectedFixture?.fixture?.id || 0),
@@ -58,10 +59,9 @@ const useContract = () => {
   })
 
   useEffect(() => {
-    if (isFetched && !!receipt) {
-      switch (receipt.status) {
+    if (isApproveFetched && !!approveReceipt) {
+      switch (approveReceipt.status) {
         case 'success': {
-          console.log('!!!!!!!!!!!!!!!!!')
           placeBet()
           // onSuccess?.(receipt);
           // onSettled?.(receipt, error);
@@ -73,18 +73,33 @@ const useContract = () => {
         }
       }
     }
-  }, [isFetched, receipt])
+  }, [isApproveFetched, approveReceipt])
+
+  useEffect(() => {
+    if (isBetFetched && !!betReceipt) {
+      switch (betReceipt.status) {
+        case 'success': {
+          saveFixture(selectedFixture!)
+          // onSuccess?.(receipt);
+          // onSettled?.(receipt, error);
+          break;
+        }
+        case 'reverted': {
+          // onSettled?.(receipt, error);
+          break;
+        }
+      }
+    }
+  }, [isBetFetched, betReceipt])
 
   return {
     account,
     isConnected,
-    // placeBet,
     approvePaymentToken,
     // loading,
     walletBalance: balanceData,
     decimalData,
-    isFetched,
-    receipt,
+    approveReceipt,
   }
 }
 

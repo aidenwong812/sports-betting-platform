@@ -28,8 +28,8 @@ const usePlaceBet = ({ chainId, bets, account }: { chainId: Chain['id'], bets: [
   const {
     isFetching: isFetchingReceipt,
     isLoading: isLoadingReceipt,
-    data: receipt,
-    isFetched,
+    data: betReceipt,
+    isFetched: isBetFetched,
     isSuccess,
     isError: isErrorReceipt,
     error: errorTransaction,
@@ -63,7 +63,9 @@ const usePlaceBet = ({ chainId, bets, account }: { chainId: Chain['id'], bets: [
     isSuccess,
     isError,
     error,
-    placeBet
+    isBetFetched,
+    betReceipt,
+    placeBet,
   }
 }
 
