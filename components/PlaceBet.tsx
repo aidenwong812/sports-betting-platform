@@ -2,7 +2,6 @@ import Link from "next/link"
 import { formatUnits } from "viem"
 import { useBet } from "@/provider/BetProvider"
 import { useWeb3 } from "@/provider/Web3Provider"
-import { useEffect } from "react"
 
 const PlaceBet = () => {
   const {
