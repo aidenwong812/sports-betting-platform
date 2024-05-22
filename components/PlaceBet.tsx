@@ -2,6 +2,7 @@ import Link from "next/link"
 import { formatUnits } from "viem"
 import { useBet } from "@/provider/BetProvider"
 import { useWeb3 } from "@/provider/Web3Provider"
+import Spinner from "./Spinner"
 
 const PlaceBet = () => {
   const {
@@ -16,10 +17,17 @@ const PlaceBet = () => {
     approvePaymentToken,
     decimalData,
     walletBalance,
+    betLoading,
+    approveLoading,
   } = useWeb3()
 
   const handlePlaceBet = async () => {
-    await approvePaymentToken()
+    if (betLoading || approveLoading) return
+    try {
+      await approvePaymentToken()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -150,7 +158,11 @@ const PlaceBet = () => {
                         </div>
                         <div className="combo-footer">
                           <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
-                            <span> Place Bet ${betAmount || 0}</span>
+                            {
+                              (betLoading || approveLoading)
+                                ? <Spinner />
+                                : <span> Place Bet ${betAmount || 0}</span>
+                            }
                           </Link>
                         </div>
                       </div>
@@ -275,7 +287,11 @@ const PlaceBet = () => {
                       </div>
                       <div className="combo-footer">
                         <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
-                          <span> Place Bet ${betAmount || 0}</span>
+                          {
+                            (betLoading || approveLoading)
+                              ? <Spinner />
+                              : <span> Place Bet ${betAmount || 0}</span>
+                          }
                         </Link>
                       </div>
                     </div>

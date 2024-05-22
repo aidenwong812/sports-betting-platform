@@ -43,11 +43,18 @@ const useApprovePaymentToken = ({ chainId, contractToApprove, approveAmount }: {
     }
   }
 
+  const isLoading = isLoadingReceipt || isLoadingPrepare || isLoadingWrite || isFetchingReceipt
+  const isError = isErrorWrite || isErrorReceipt || isErrorPrepare
+  const error = errorWrite || errorTransaction || errorPrepare
+
   return {
     approvePaymentToken,
     isApproveFetched,
     approveReceipt,
     errorTransaction,
+    isLoading,
+    isError,
+    error,
   }
 }
 

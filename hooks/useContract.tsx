@@ -39,13 +39,13 @@ const useContract = () => {
 
   const [balanceData, decimalData] = erc20Data || [];
 
-  const { approvePaymentToken, isApproveFetched, approveReceipt } = useApprovePaymentToken({
+  const { approvePaymentToken, isApproveFetched, isLoading: approveLoading, approveReceipt } = useApprovePaymentToken({
     chainId,
     contractToApprove: getAddress("0x45986706d9F3d1d8DfBbAf44f3ABcc7724FA3D43"),
     approveAmount: parseUnits((betAmount || 0).toString(), decimalData || 18)
   })
 
-  const { placeBet, isLoading: loading, isBetFetched, betReceipt } = usePlaceBet({
+  const { placeBet, isLoading: betLoading, isBetFetched, betReceipt } = usePlaceBet({
     account,
     bets: [
       BigInt(selectedFixture?.fixture?.id || 0),
@@ -96,7 +96,8 @@ const useContract = () => {
     account,
     isConnected,
     approvePaymentToken,
-    // loading,
+    approveLoading,
+    betLoading,
     walletBalance: balanceData,
     decimalData,
     approveReceipt,
