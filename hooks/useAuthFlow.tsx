@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
+import jwt from "jsonwebtoken"
 import handleTxError from "@/lib/handleTxError"
 
 const useAuthFlow = () => {
@@ -11,7 +12,7 @@ const useAuthFlow = () => {
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
   const [isPolicyApproved, setIsPolicyApproved] = useState(false)
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState("")
 
   const isAuthenticated = userData
 
@@ -42,7 +43,7 @@ const useAuthFlow = () => {
   const login = async (event: FormEvent) => {
     setLoading(true)
     event.preventDefault()
-    
+
     const res = await axios.post(
       "/api/auth/signin",
       { email: userEmail, password: userPassword }
@@ -56,7 +57,7 @@ const useAuthFlow = () => {
         toast.error(res.data.error)
       }
     }
-    
+
     setUserName("")
     setUserEmail("")
     setUserPassword("")
@@ -66,7 +67,7 @@ const useAuthFlow = () => {
   const logout = () => {
     try {
       // auth.signOut()
-      setUserData(null)
+      setUserData("")
       localStorage.removeItem("token")
     } catch (err) {
       handleTxError(err)
@@ -74,17 +75,24 @@ const useAuthFlow = () => {
   }
 
   useEffect(() => {
-    // auth.onAuthStateChanged(async (user) => {
-    //   if (user) {
-    //     const data = await createUserFromCredential(user)
-    //     setUserData(data)
-    //     setAuthStatus(STATUS.AUTHORIZED)
-    //     return
-    //   }
-
-    //   setUserData(null)
-    //   setAuthStatus(STATUS.UNAUTHORIZED)
-    // })
+    (async () => {
+      if (localStorage) {
+        const token = localStorage.getItem("token")
+        if (token) {
+          const res = await axios.post(
+            "/api/auth/verifyToken",
+            {
+              token,
+            }
+          );
+          if (res.status === 200 && res.data.res === "success") {
+            setUserData(token)
+          } else {
+            setUserData("")
+          }
+        }
+      }
+    })()
   }, [])
 
   return {
