@@ -1,8 +1,13 @@
-import Link from "next/link";
-import { useAuth } from "@/provider/AuthProvider";
+import Link from "next/link"
+import { useAuth } from "@/provider/AuthProvider"
 
-const SignIn = () => {
+const SignIn = ({ setOpenMenu }: { setOpenMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const { login, userEmail, setUserEmail, userPassword, setUserPassword } = useAuth()
+
+  const handleSubmit = (event: React.FormEvent) => {
+    setOpenMenu(false)
+    login(event)
+  }
 
   return (
     <div className="modal mylogin signup-popup fade" id="exampleModal" tabIndex={-1} aria-hidden="true">
@@ -21,7 +26,7 @@ const SignIn = () => {
           <button type="button" className="btn-close cross-btn" data-bs-dismiss="modal" aria-label="Close"></button>
           <div className="modal-body">
             <div className="register-from">
-              <form onSubmit={login}>
+              <form onSubmit={handleSubmit}>
                 <div className="items">
                   <div className="form-input">
                     <label htmlFor="email3" className="form-label">Email</label>

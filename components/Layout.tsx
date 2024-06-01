@@ -3,12 +3,16 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useState } from 'react';
+import { formatUnits } from 'viem';
 
 import { useAuth } from '@/provider/AuthProvider';
+import { useBet } from '@/provider/BetProvider';
+import { useWeb3 } from '@/provider/Web3Provider';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
 import { WalletConnectButton } from './WalletConnectButton';
 import PlaceBet from './PlaceBet';
+import Spinner from './Spinner';
 
 type Props = {
   children: ReactNode;
@@ -22,6 +26,35 @@ export default function Layout({ children }: Props) {
 
   const inactiveTheme = theme === "light" ? "dark" : "light";
   const { pathname } = useRouter()
+  const {
+    betAmount,
+    setBetAmount,
+    betType,
+    setBetType,
+    selectedFixture,
+    selectedOdd,
+  } = useBet()
+  const {
+    approvePaymentToken,
+    decimalData,
+    walletBalance,
+    betLoading,
+    approveLoading,
+  } = useWeb3()
+
+  const handleLogout = () => {
+    setOpenMenu(false)
+    logout()
+  }
+
+  const handlePlaceBet = async () => {
+    if (betLoading || approveLoading) return
+    try {
+      await approvePaymentToken()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -52,16 +85,35 @@ export default function Layout({ children }: Props) {
                 <span></span>
               </div>
               <ul className={`main-menu ${openMenu && 'active act'}`}>
-                <li className="menu--btn">
-                  <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <span>Log In</span>
-                  </Link>
-                </li>
-                <li className="menu--btn">
-                  <Link href="#0" className="cmn--btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                    <span>Sign Up</span>
-                  </Link>
-                </li>
+                {
+                  isAuthenticated ? (
+                    <>
+                      <li className="menu--btn">
+                        <button className="btn--two" onClick={handleLogout}>
+                          <span>
+                            Log out
+                          </span>
+                        </button>
+                      </li>
+                      <li className="menu--btn">
+                        <WalletConnectButton />
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="menu--btn">
+                        <Link href="#0" className="btn--two" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          <span>Log In</span>
+                        </Link>
+                      </li>
+                      <li className="menu--btn">
+                        <Link href="#0" className="cmn--btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                          <span>Sign Up</span>
+                        </Link>
+                      </li>
+                    </>
+                  )
+                }
               </ul>
             </div>
             <div className="right-menu-reature">
@@ -72,7 +124,7 @@ export default function Layout({ children }: Props) {
                 {
                   isAuthenticated ? (
                     <>
-                      <button className="btn--two" onClick={logout}>
+                      <button className="btn--two" onClick={handleLogout}>
                         <span>
                           Log out
                         </span>
@@ -384,8 +436,8 @@ export default function Layout({ children }: Props) {
         {/* // <!--Main Body Section End--> */}
 
         {/* // <!-- Popup Section Start --> */}
-        <SignIn />
-        <SignUp />
+        <SignIn setOpenMenu={setOpenMenu} />
+        <SignUp setOpenMenu={setOpenMenu} />
         {/* // <!--menu modal--> */}
         <div className="modal right-menu-modal fade" id="exampleModal3" tabIndex={-1} aria-hidden="true">
           <div className="modal-dialog modal-sm">
@@ -401,12 +453,13 @@ export default function Layout({ children }: Props) {
                           <span className="text-blabce">Balance</span>
                         </div>
                         <span className="blance">
-                          $300
+                          {`$${formatUnits(walletBalance || BigInt(0), decimalData || 18) || 0.00}`}
                         </span>
                       </div>
                       <div className="betslip-wrapper">
                         <Link href="#0" className="left-betslip">
-                          <span><img src="/img/header/right-icon/bed.svg" alt="icon" /></span>
+                          <span className="bed2"><img src="/img/header/right-icon/bed2.png" alt="icon" /></span>
+                          <span className="bed1"><img src="/img/header/right-icon/bed.svg" alt="icon" /></span>
                           <span className="text-bets">Bet Slip</span>
                         </Link>
                         <Link href="#0" className="left-betslip">
@@ -414,172 +467,252 @@ export default function Layout({ children }: Props) {
                           <span className="text-bets">My Bets</span>
                         </Link>
                       </div>
-                      <div className="combo-box">
-                        <ul className="nav">
-                          <li className="nav-item">
-                            <Link className="nav-link link-secondary" data-bs-toggle="tab" data-bs-target="#coombomobile" href="#"><span>Single bets</span></Link>
-                          </li>
-                          <li className="nav-item">
-                            <Link className="nav-link link-secondary active" data-bs-toggle="tab" data-bs-target="#bbetsmobile" href="#"><span>Combo</span></Link>
-                          </li>
-                        </ul>
-                        <div className="tab-content" id="tabContentboxesmobile">
-                          <div className="tab-pane fade" id="coombomobile" role="tabpanel" >
-                            <div className="combo-wrapper">
-                              <div className="combo-wrapper">
-                                <div className="close-box">
-                                  <div className="close-items">
-                                    <div className="close-head">
-                                      <span>Latvia vs Moldova</span>
-                                      <span className="close">
-                                        <i className="fas fa-xmark"></i>
+                      {
+                        selectedFixture && selectedOdd.length > 0 && (
+                          <div className="combo-box">
+                            <ul className="nav">
+                              <li className="nav-item">
+                                <Link
+                                  className={`nav-link link-secondary ${betType === "single" ? "active" : ""}`}
+                                  id="combo-tab"
+                                  data-bs-toggle="tab"
+                                  data-bs-target="#coombo"
+                                  href="#"
+                                  onClick={() => setBetType("single")}
+                                >
+                                  <span>Single bets</span>
+                                </Link>
+                              </li>
+                              <li className="nav-item">
+                                <Link
+                                  className={`nav-link link-secondary ${betType === "combo" ? "active" : ""}`}
+                                  id="bets-tab"
+                                  data-bs-toggle="tab"
+                                  data-bs-target="#bbets"
+                                  href="#"
+                                  onClick={() => setBetType("combo")}
+                                >
+                                  <span>Combo</span>
+                                </Link>
+                              </li>
+                            </ul>
+                            <div className="tab-content" id="tabContentboxes">
+                              <div
+                                className={`tab-pane fade show ${betType === "single" ? "active" : ""}`}
+                                id="coombo"
+                                role="tabpanel"
+                              >
+                                <div className="combo-wrapper">
+                                  <div className="combo-wrapper">
+                                    <div className="close-box">
+                                      <div className="close-items">
+                                        <div className="close-head">
+                                          <span>{selectedFixture.teams?.home?.name} vs {selectedFixture.teams?.away?.name}</span>
+                                          <span className="close">
+                                            <i className="fas fa-xmark"></i>
+                                          </span>
+                                        </div>
+                                        <div className="match-fixing">
+                                          <div className="match-items">
+                                            <div className="match-items-left">
+                                              <div className="icon">
+                                                <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                                              </div>
+                                              <div className="cont">
+                                                <span>
+                                                  {
+                                                    selectedOdd[0].value === "Home"
+                                                      ? selectedFixture.teams.home.name
+                                                      : selectedOdd[0].value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                                  }
+                                                </span>
+                                                <span className="winner">Match Winner</span>
+                                              </div>
+                                            </div>
+                                            <div className="match-items-right">
+                                              <div className="icon">
+                                                <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                              </div>
+                                              <span>{selectedOdd[0].odd}</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="combo-switch">
+                                      <span>
+                                        Accept all odds changes
+                                      </span>
+                                      <label className="switch-com">
+                                        <input type="checkbox" className="checkbox" hidden />
+                                        <span className="checkbox-label">
+                                          <span className="ball"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                    <div className="ammount-items">
+                                      <form action="#">
+                                        <input
+                                          type="number"
+                                          placeholder="Bet Amount"
+                                          value={betAmount}
+                                          onChange={e => setBetAmount(parseFloat(e.target.value))}
+                                        />
+                                        <button type="submit">
+                                          Max
+                                        </button>
+                                      </form>
+                                    </div>
+                                    <div className="possible-win">
+                                      <span>Possible win</span>
+                                      <span className="amount">
+                                        ${(betAmount * selectedOdd[0].odd || 0).toFixed(2)}
                                       </span>
                                     </div>
-                                    <div className="match-fixing">
-                                      <div className="match-items">
-                                        <div className="match-items-left">
-                                          <div className="icon">
-                                            <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                                    <div className="combo-footer">
+                                      <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
+                                        {
+                                          (betLoading || approveLoading)
+                                            ? <Spinner />
+                                            : <span> Place Bet ${betAmount || 0}</span>
+                                        }
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                className={`tab-pane fade show ${betType === "combo" ? "active" : ""}`}
+                                id="bbets"
+                                role="tabpanel"
+                              >
+                                <div className="combo-wrapper">
+                                  <div className="close-box">
+                                    <div className="close-items">
+                                      <div className="close-head">
+                                        <span>{selectedFixture.teams.home.name} vs {selectedFixture.teams.away.name}</span>
+                                        <span className="close">
+                                          <i className="fas fa-xmark"></i>
+                                        </span>
+                                      </div>
+                                      <div className="match-fixing">
+                                        <div className="match-items">
+                                          <div className="match-items-left">
+                                            <div className="icon">
+                                              <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                                            </div>
+                                            <div className="cont">
+                                              <span>
+                                                {
+                                                  selectedOdd[0].value === "Home"
+                                                    ? selectedFixture.teams.home.name
+                                                    : selectedOdd[0].value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                                }
+                                              </span>
+                                              <span className="winner">Match Winner</span>
+                                            </div>
                                           </div>
-                                          <div className="cont">
-                                            <span>Moldova</span>
-                                            <span className="winner">Match Winner</span>
+                                          <div className="match-items-right">
+                                            <div className="icon">
+                                              <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                            </div>
+                                            <span>{selectedOdd[0].odd}</span>
                                           </div>
                                         </div>
-                                        <div className="match-items-right">
-                                          <div className="icon">
-                                            <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                        {
+                                          selectedOdd[1] && (
+                                            <div className="match-items">
+                                              <div className="match-items-left">
+                                                <div className="icon">
+                                                  <img src="/img/header/right-icon/footaball.svg" alt="icon" />
+                                                </div>
+                                                <div className="cont">
+                                                  <span>
+                                                    {
+                                                      selectedOdd[1].value === "Home"
+                                                        ? selectedFixture.teams.home.name
+                                                        : selectedOdd[1].value === "Away" ? selectedFixture.teams.away.name : "Draw"
+                                                    }
+                                                  </span>
+                                                  <span className="winner">Match Winner</span>
+                                                </div>
+                                              </div>
+                                              <div className="match-items-right">
+                                                <div className="icon">
+                                                  <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                                </div>
+                                                <span>{selectedOdd[1].odd}</span>
+                                              </div>
+                                            </div>
+                                          )
+                                        }
+                                        <div className="match-items match-odds">
+                                          <div className="match-items-left">
+                                            <div className="cont">
+                                              <span>Total odds</span>
+                                            </div>
                                           </div>
-                                          <span>5.20</span>
+                                          <div className="match-items-right">
+                                            <div className="icon">
+                                              <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
+                                            </div>
+                                            <span>
+                                              {
+                                                selectedOdd.length > 1
+                                                  ? (parseFloat(selectedOdd[0].odd) + parseFloat(selectedOdd[1].odd)).toFixed(2)
+                                                  : selectedOdd[0].odd
+                                              }
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div className="combo-switch">
-                                  <span>
-                                    Accept all odds changes
-                                  </span>
-                                  <label className="switch-com">
-                                    <input type="checkbox" className="checkbox" hidden />
-                                    <span className="checkbox-label">
-                                      <span className="ball"></span>
+                                  <div className="combo-switch">
+                                    <span>
+                                      Accept all odds changes
                                     </span>
-                                  </label>
-                                </div>
-                                <div className="ammount-items">
-                                  <form action="#">
-                                    <input type="number" placeholder="Bet Amount" />
-                                    <button type="submit">
-                                      Max
-                                    </button>
-                                  </form>
-                                </div>
-                                <div className="possible-win">
-                                  <span>Possible win</span>
-                                  <span className="amount">$300</span>
-                                </div>
-                                <div className="combo-footer">
-                                  <Link href="#0" className="cmn--btn">
-                                    <span> Place Bet $300</span>
-                                  </Link>
+                                    <label className="switch-com">
+                                      <input type="checkbox" className="checkbox" hidden />
+                                      <span className="checkbox-label">
+                                        <span className="ball"></span>
+                                      </span>
+                                    </label>
+                                  </div>
+                                  <div className="ammount-items">
+                                    <form action="#">
+                                      <input
+                                        type="number"
+                                        placeholder="Bet Amount"
+                                        value={betAmount}
+                                        onChange={e => setBetAmount(parseFloat(e.target.value))}
+                                      />
+                                      <button type="submit">
+                                        Max
+                                      </button>
+                                    </form>
+                                  </div>
+                                  <div className="possible-win">
+                                    <span>Possible win</span>
+                                    <span className="amount">
+                                      ${(betAmount * selectedOdd[0].odd || 0).toFixed(2)}
+                                    </span>
+                                  </div>
+                                  <div className="combo-footer">
+                                    <Link href="#0" className="cmn--btn" onClick={handlePlaceBet}>
+                                      {
+                                        (betLoading || approveLoading)
+                                          ? <Spinner />
+                                          : <span> Place Bet ${betAmount || 0}</span>
+                                      }
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="tab-pane fade show active" id="bbetsmobile" role="tabpanel">
-                            <div className="combo-wrapper">
-                              <div className="close-box">
-                                <div className="close-items">
-                                  <div className="close-head">
-                                    <span>Scotland vs Ukraine</span>
-                                    <span className="close">
-                                      <i className="fas fa-xmark"></i>
-                                    </span>
-                                  </div>
-                                  <div className="match-fixing">
-                                    <div className="match-items">
-                                      <div className="match-items-left">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/footaball.svg" alt="icon" />
-                                        </div>
-                                        <div className="cont">
-                                          <span>Scotland</span>
-                                          <span className="winner">Match Winner</span>
-                                        </div>
-                                      </div>
-                                      <div className="match-items-right">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                        </div>
-                                        <span>3.20</span>
-                                      </div>
-                                    </div>
-                                    <div className="match-items">
-                                      <div className="match-items-left">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/footaball.svg" alt="icon" />
-                                        </div>
-                                        <div className="cont">
-                                          <span>Draw</span>
-                                          <span className="winner">Match Winner</span>
-                                        </div>
-                                      </div>
-                                      <div className="match-items-right">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                        </div>
-                                        <span>4.60</span>
-                                      </div>
-                                    </div>
-                                    <div className="match-items match-odds">
-                                      <div className="match-items-left">
-                                        <div className="cont">
-                                          <span>Total odds</span>
-                                        </div>
-                                      </div>
-                                      <div className="match-items-right">
-                                        <div className="icon">
-                                          <img src="/img/header/right-icon/uptodwon.svg" alt="icon" />
-                                        </div>
-                                        <span>12.19</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="combo-switch">
-                                <span>
-                                  Accept all odds changes
-                                </span>
-                                <label className="switch-com">
-                                  <input type="checkbox" className="checkbox" hidden />
-                                  <span className="checkbox-label">
-                                    <span className="ball"></span>
-                                  </span>
-                                </label>
-                              </div>
-                              <div className="ammount-items">
-                                <form action="#">
-                                  <input type="number" placeholder="Bet Amount" />
-                                  <button type="submit">
-                                    Max
-                                  </button>
-                                </form>
-                              </div>
-                              <div className="possible-win">
-                                <span>Possible win</span>
-                                <span className="amount">$300</span>
-                              </div>
-                              <div className="combo-footer">
-                                <Link href="#0" className="cmn--btn">
-                                  <span> Place Bet $300</span>
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                        )
+                      }
                     </div>
                   </div>
                 </div>
