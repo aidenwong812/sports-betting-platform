@@ -1,8 +1,13 @@
-import Link from "next/link";
-import { useAuth } from "@/provider/AuthProvider";
+import Link from "next/link"
+import { useAuth } from "@/provider/AuthProvider"
 
-const SignUp = () => {
+const SignUp = ({ setOpenMenu }: { setOpenMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const { register, userEmail, setUserEmail, userName, setUserName, userPassword, setUserPassword } = useAuth()
+
+  const handleSubmit = (event: React.FormEvent) => {
+    setOpenMenu(false)
+    register(event)
+  }
 
   return (
     <>
@@ -22,7 +27,7 @@ const SignUp = () => {
             <button type="button" className="btn-close cross-btn" data-bs-dismiss="modal" aria-label="Close"></button>
             <div className="modal-body">
               <div className="register-from">
-                <form onSubmit={register}>
+                <form onSubmit={handleSubmit}>
                   <div className="items">
                     <div className="form-input">
                       <label htmlFor="username" className="form-label">Username</label>
@@ -89,7 +94,7 @@ const SignUp = () => {
                     </div>
                   </div>
                   <div className="items text-center">
-                    <button type="submit" className="cmn--btn cd-popup-close repopup"  data-bs-dismiss="modal" aria-label="Close">
+                    <button type="submit" className="cmn--btn cd-popup-close repopup" data-bs-dismiss="modal" aria-label="Close">
                       <span>Start Playing</span>
                     </button>
                   </div>
