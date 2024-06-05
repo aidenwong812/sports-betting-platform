@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { useAccount, useReadContracts } from "wagmi";
 import { sepolia } from "viem/chains";
 import { getAddress, parseUnits } from "viem";
+import { toast } from "react-toastify";
 import { erc20Contract } from "@/lib/const/contracts";
+import saveFixture from "@/lib/api/saveFixture";
 import { useBet } from "@/provider/BetProvider";
 import usePlaceBet from "./usePlaceBet";
 import useApprovePaymentToken from "./useApprovePaymentToken";
-import saveFixture from "@/lib/api/saveFixture";
 
 const useContract = () => {
   const chainId = sepolia.id
@@ -63,6 +64,7 @@ const useContract = () => {
       switch (approveReceipt.status) {
         case 'success': {
           placeBet()
+          toast.success("Payment token approved")
           // onSuccess?.(receipt);
           // onSettled?.(receipt, error);
           break;
@@ -80,6 +82,7 @@ const useContract = () => {
       switch (betReceipt.status) {
         case 'success': {
           saveFixture(selectedFixture!)
+          toast.success("Bet placed")
           // onSuccess?.(receipt);
           // onSettled?.(receipt, error);
           break;
