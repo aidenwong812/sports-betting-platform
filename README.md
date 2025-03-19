@@ -1,1 +1,1 @@
-## Online bet nextjs template
+## Decentralized Online Sports Betting Platform
